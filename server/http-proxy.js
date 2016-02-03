@@ -6,9 +6,14 @@ var lodash = require("lodash");
 
 var Q = require("q");
 
-module.exports = function(options) {
-    options = options || {};
-    options.maxContentLength = options.maxContentLength || 5 * 1024 * 1024;  // 5 MiB
+var DEFAULT_OPTIONS = {
+    maxContentLength: 5 * 1024 * 1024,  // 5 MiB
+    allowedPorts: [80, 443]
+};
+
+module.exports = function(params) {
+    var options = lodash.clone(DEFAULT_OPTIONS);
+    lodash.merge(options, params);
 
     function proxyMiddleware(req, res, next) {
 
@@ -47,7 +52,15 @@ module.exports = function(options) {
             return;
         }
 
-        // TODO check port / protocol
+        if (!parsedUrl.port) {
+            parsedUrl.port = (parsedUrl.protocol == "https:") ? 443 : 80;
+        }
+
+        if (options.allowedPorts.indexOf(Number(parsedUrl.port)) < 0) {
+            res.sendStatus(400);
+            next();
+            return;
+        }
 
         // Retrieve requested content and forward it
 
@@ -61,7 +74,7 @@ module.exports = function(options) {
         var httpOptions = {
             protocol: parsedUrl.protocol,
             hostname: parsedUrl.hostname,
-            port: parsedUrl.port || ((parsedUrl.protocol == "https:") ? 443 : 80),
+            port: parsedUrl.port,
             path: parsedUrl.path,
             method: "GET",
             headers: httpHeaders

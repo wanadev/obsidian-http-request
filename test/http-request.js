@@ -329,6 +329,26 @@ describe("http-request", function() {
                 });
         });
 
+        it("cannot download files from an URI that uses an unauthorized port", function() {
+            return httpRequest.getRawProxy("http://localhost:6666/")
+                .then(function(result) {
+                    throw new Error("ShouldNotBeCalled");
+                })
+                .catch(function(error) {
+                    expect(error).to.match(/HttpStatus400/);
+                });
+        });
+
+        it("cannot download files from an URI that uses an unauthorized protocol", function() {
+            return httpRequest.getRawProxy("spdy://localhost/")
+                .then(function(result) {
+                    throw new Error("ShouldNotBeCalled");
+                })
+                .catch(function(error) {
+                    expect(error).to.match(/HttpStatus400/);
+                });
+        });
+
     });
 
 });

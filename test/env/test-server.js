@@ -17,9 +17,10 @@ app.get("/large-content", function(req, res) {
     res.send(buffer);
 });
 
-
 app.use("/proxy", bodyParser.raw({type: "application/json"}));
-app.use("/proxy", proxyMiddleware());
+app.use("/proxy", proxyMiddleware({
+    allowedPorts: [80, 443, 3042]
+}));
 
 app.use("/mocha/", express.static(__dirname + "/../../node_modules/mocha/"));
 app.use("/", express.static(__dirname));
