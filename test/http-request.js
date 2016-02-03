@@ -319,6 +319,15 @@ describe("http-request", function() {
                 });
         });
 
+        it("cannot download files that are too large", function() {
+            return httpRequest.getRawProxy(ROOT_URL + "/large-content")
+                .then(function(result) {
+                    throw new Error("ShouldNotBeCalled");
+                })
+                .catch(function(error) {
+                    expect(error).to.match(/HttpStatus413/);
+                });
+        });
 
     });
 

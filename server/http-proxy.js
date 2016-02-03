@@ -7,15 +7,12 @@ var lodash = require("lodash");
 var Q = require("q");
 
 module.exports = function(options) {
+    options = options || {};
+    options.maxContentLength = options.maxContentLength || 5 * 1024 * 1024;  // 5 MiB
 
     function proxyMiddleware(req, res, next) {
 
-        // jshint ignore:start
-        console.log("=================");
-        console.log(req.body.toString());
-        // jshint ignore:end
-
-        // Checks
+        // Checks request
 
         if (req.method != "POST" || !(req.body instanceof Buffer)) {
             res.sendStatus(400);
@@ -95,11 +92,19 @@ module.exports = function(options) {
                         throw error;
                     }
                 }
-                // TODO check content-length
+                if (response.headers["content-length"]) {
+                    var contentLength = Number(response.headers["content-length"]);
+                    if (contentLength > options.maxContentLength) {
+                        error = new Error("ContentTooLarge");
+                        error.statusCode = 413;
+                        throw error;
+                    }
+                }
                 return response;
             })
             .then(function(response) {
-                // TODO check content-length
+                var contentLength = 0;
+
                 res.set("Content-Type", response.headers["content-type"] || "application/octet-stream");
                 if (response.headers["content-length"]) {
                     res.set("Content-Length", response.headers["content-length"]);
@@ -107,6 +112,12 @@ module.exports = function(options) {
 
                 response.on("data", function(chunk) {
                     res.write(chunk);
+                    contentLength += chunk.length;
+                    if (contentLength > options.maxContentLength) {
+                        response.destroy();
+                        res.end();
+                        next();
+                    }
                 });
 
                 response.on("end", function() {

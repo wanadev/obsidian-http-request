@@ -12,6 +12,12 @@ app.get("/echo-headers", function(req, res) {
     res.send(JSON.stringify(req.headers));
 });
 
+app.get("/large-content", function(req, res) {
+    var buffer = new Buffer(6 * 1024 * 1024);  // 6 MiB
+    res.send(buffer);
+});
+
+
 app.use("/proxy", bodyParser.raw({type: "application/json"}));
 app.use("/proxy", proxyMiddleware());
 
