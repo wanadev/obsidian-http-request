@@ -1,0 +1,15 @@
+{
+  "futurehostile": true,
+  "freeze": true,
+  "latedef": true,
+  "noarg": true,
+  "nocomma": true,
+  "nonbsp": true,
+  "nonew": true,
+  "undef": true,
+  "browser": true,
+  "browserify": true,
+  "mocha": true,
+  "curly": true,
+  "globals": {}
+}
