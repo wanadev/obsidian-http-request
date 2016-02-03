@@ -5,34 +5,18 @@ var httpRequest = require("../lib/");
 
 describe("http-request", function() {
 
-    describe("get", function() {
+    describe("getRaw", function() {
 
         it("can retrieve an ASCII text file", function() {
-            return httpRequest.get(window.location + "/samples/text-ascii.txt")
+            return httpRequest.getRaw(window.location + "/samples/text-ascii.txt")
                 .then(function(result) {
-                    expect(result).to.be.a("string");
+                    expect(result).to.be.a(Buffer);
                     expect(result).to.have.length(91);
                 });
         });
 
-        it("can retrieve an UTF-8 text file", function() {
-            return httpRequest.get(window.location + "/samples/text-utf8.txt")
-                .then(function(result) {
-                    expect(result).to.be.a("string");
-                    expect(result).to.have.length(241);
-                });
-        });
-
-        it("can retrieve a JSON file", function() {
-            return httpRequest.get(window.location + "/samples/json-ok.json")
-                .then(function(result) {
-                    expect(result).to.be.a("string");
-                    expect(result).to.have.length(15);
-                });
-        });
-
         it("can retrieve a binary file", function() {
-            return httpRequest.get(window.location + "/samples/binary.bin")
+            return httpRequest.getRaw(window.location + "/samples/binary.bin")
                 .then(function(result) {
                     expect(result).to.be.a(Buffer);
                     expect(result).to.have.length(6);
@@ -46,16 +30,15 @@ describe("http-request", function() {
         });
 
         it("can retrieve large files", function() {
-            return httpRequest.get(window.location + "/samples/large-file.png")
+            return httpRequest.getRaw(window.location + "/samples/large-file.png")
                 .then(function(result) {
                     expect(result).to.be.a(Buffer);
                     expect(result).to.have.length(633203);
                 });
         });
 
-
         it("can report HTTP errors", function() {
-            return httpRequest.get(window.location + "/samples/404")
+            return httpRequest.getRaw(window.location + "/samples/404")
                 .then(function(result) {
                     throw new Error("ShouldNotBeCalled");
                 })
@@ -66,12 +49,50 @@ describe("http-request", function() {
 
         // Skipped because it makes tests timeout...
         it.skip("can report non-HTTP errors", function() {
-            return httpRequest.get("http://test.nowhere/")
+            return httpRequest.getRaw("http://test.nowhere/")
                 .then(function(result) {
                     throw new Error("ShouldNotBeCalled");
                 })
                 .catch(function(error) {
                     expect(error).to.match(/HttpConnexionError/);
+                });
+        });
+
+    });
+
+    describe("getText", function() {
+
+        it("can retrieve an ASCII text file", function() {
+            return httpRequest.getText(window.location + "/samples/text-ascii.txt")
+                .then(function(result) {
+                    expect(result).to.be.a("string");
+                    expect(result).to.have.length(91);
+                });
+        });
+
+        it("can retrieve an UTF-8 text file", function() {
+            return httpRequest.getText(window.location + "/samples/text-utf8.txt")
+                .then(function(result) {
+                    expect(result).to.be.a("string");
+                    expect(result).to.have.length(241);
+                });
+        });
+
+        it("do not crashes on invalid texts", function() {
+            return httpRequest.getText(window.location + "/samples/binary.bin")
+                .then(function(result) {
+                    expect(result).to.be.a("string");
+                    expect(result).to.have.length(6);
+                });
+        });
+
+        it("can report HTTP errors", function() {
+            return httpRequest.getText(window.location + "/samples/404")
+                .then(function(result) {
+                    throw new Error("ShouldNotBeCalled");
+                })
+                .catch(function(error) {
+                    expect(error).to.match(/HttpStatus404/);
                 });
         });
 
