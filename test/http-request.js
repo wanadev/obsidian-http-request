@@ -298,6 +298,28 @@ describe("http-request", function() {
                 });
         });
 
+        it("can define allowed mimetypes of the response (ok)", function() {
+            return httpRequest.getRawProxy(SAMPLES_URL + "text-ascii.txt", {
+                    allowedMimes: ["text/plain"]
+                })
+                .then(function(result) {
+                    expect(result).to.have.length(91);
+                });
+        });
+
+        it("can define allowed mimetypes of the response (not ok)", function() {
+            return httpRequest.getRawProxy(SAMPLES_URL + "text-ascii.txt", {
+                    allowedMimes: ["image/png"]
+                })
+                .then(function(result) {
+                    throw new Error("ShouldNotBeCalled");
+                })
+                .catch(function(error) {
+                    expect(error).to.match(/HttpStatus406/);
+                });
+        });
+
+
     });
 
 });
