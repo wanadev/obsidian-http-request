@@ -12,10 +12,6 @@ module.exports = function(options) {
 
         // jshint ignore:start
         console.log("=================");
-        //console.log(req);
-        console.log(req.method);
-        console.log(req.headers);
-        console.log(req.body);
         console.log(req.body.toString());
         // jshint ignore:end
 
@@ -27,29 +23,31 @@ module.exports = function(options) {
             return;
         }
 
-        var data;
+        var proxyOptions;
 
         try {
-            data = JSON.parse(req.body.toString());
+            proxyOptions = JSON.parse(req.body.toString());
         } catch (error) {
             res.sendStatus(400);
             next();
             return;
         }
 
-        if (data === null || !data.url) {
+        if (proxyOptions === null || !proxyOptions.url) {
             res.sendStatus(400);
             next();
             return;
         }
 
-        var parsedUrl = url.parse(data.url);
+        var parsedUrl = url.parse(proxyOptions.url);
 
         if (!parsedUrl.protocol || (parsedUrl.protocol != "http:" && parsedUrl.protocol != "https:") || !parsedUrl.hostname) {
             res.sendStatus(400);
             next();
             return;
         }
+
+        // TODO check port / protocol
 
         // Retrieve requested content and forward it
 
@@ -58,7 +56,7 @@ module.exports = function(options) {
             "referer": parsedUrl.protocol + "//" + parsedUrl.host + parsedUrl.path
         };
 
-        lodash.merge(httpHeaders, data.headers || {});
+        lodash.merge(httpHeaders, proxyOptions.headers || {});
 
         var httpOptions = {
             protocol: parsedUrl.protocol,
@@ -75,9 +73,22 @@ module.exports = function(options) {
                 request.end();
             })
             .then(function(response) {
-                // TODO checks
+                if (response.statusCode != 200) {
+                    var error = new Error("HttpStatus" + response.statusCode);
+                    error.statusCode = 404;
+                    throw error;
+                }
+                // TODO check content-type
+                // TODO check content-length
+                return response;
+            })
+            .then(function(response) {
+                // TODO check content-length
 
                 res.set("Content-Type", response.headers["content-type"] || "application/octet-stream");
+                if (response.headers["content-length"]) {
+                    res.set("Content-Length", response.headers["content-length"]);
+                }
 
                 response.on("data", function(chunk) {
                     res.write(chunk);
@@ -89,7 +100,7 @@ module.exports = function(options) {
                 });
             })
             .catch(function(error) {
-                res.sendStatus(404);
+                res.sendStatus(error.statusCode || 500);
                 next();
             });
     }

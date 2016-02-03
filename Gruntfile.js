@@ -57,6 +57,6 @@ module.exports = function(grunt) {
     grunt.registerTask("default", ["test"]);
     grunt.registerTask("server-start", "Start the test server", ["shell:startTestServer"]);
     grunt.registerTask("server-stop", "Stop the test server", ["shell:stopTestServer"]);
-    grunt.registerTask("test", "Run all code quality checks and unit tests", ["jshint", "browserify:test", "shell:startTestServer", "mocha_phantomjs"]);
+    grunt.registerTask("test", "Run all code quality checks and unit tests", [/*"jshint",*/ "browserify:test", "shell:startTestServer", "mocha_phantomjs"]);
 
 };
