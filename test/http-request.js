@@ -282,7 +282,7 @@ describe("http-request", function() {
 
     describe("*Proxy", function() {
 
-        it("can request custom headers for the proxy request", function() {
+        it("can define custom headers for the proxy request", function() {
             return httpRequest.getJsonProxy(ROOT_URL + "/echo-headers", {
                     headers: {
                         "x-test-header": "ok",
@@ -297,6 +297,7 @@ describe("http-request", function() {
                     expect(result["referer"]).to.equal("http://fake.referer/");
                 });
         });
+
     });
 
 });
