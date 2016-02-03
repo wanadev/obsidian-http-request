@@ -1,6 +1,6 @@
 {
   "name": "obsidian-http-request",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Helper library to download assets (ajax) directly or through a proxy",
   "main": "lib/index.js",
   "scripts": {
