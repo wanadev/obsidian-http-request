@@ -3,7 +3,8 @@
 var expect = require("expect.js");
 var httpRequest = require("../lib/");
 
-var SAMPLES_URL = window.location.protocol + "//" + window.location.host + "/samples/";
+var ROOT_URL = window.location.protocol + "//" + window.location.host;
+var SAMPLES_URL = ROOT_URL + "/samples/";
 
 describe("http-request", function() {
 
@@ -277,6 +278,25 @@ describe("http-request", function() {
                 });
         });
 
+    });
+
+    describe("*Proxy", function() {
+
+        it("can request custom headers for the proxy request", function() {
+            return httpRequest.getJsonProxy(ROOT_URL + "/echo-headers", {
+                    headers: {
+                        "x-test-header": "ok",
+                        "user-agent": "test-ua",
+                        "Referer": "http://fake.referer/"
+                    }
+                })
+                .then(function(result) {
+                    expect(result).to.have.keys("x-test-header", "user-agent", "referer");
+                    expect(result["x-test-header"]).to.equal("ok");
+                    expect(result["user-agent"]).to.equal("test-ua");
+                    expect(result["referer"]).to.equal("http://fake.referer/");
+                });
+        });
     });
 
 });
