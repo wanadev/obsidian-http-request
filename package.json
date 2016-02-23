@@ -30,7 +30,7 @@
     "grunt-browserify": "^4.0.1",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-jshint": "^0.12.0",
-    "grunt-mocha-phantomjs": "git+https://github.com/jdcataldo/grunt-mocha-phantomjs.git#greenkeeper-phantomjs-2.1.2",
+    "grunt-mocha-phantomjs": "^3.0.0",
     "grunt-shell": "^1.1.2",
     "mocha": "^2.4.5",
     "pm2": "^1.0.0"
