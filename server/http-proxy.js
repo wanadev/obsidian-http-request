@@ -65,7 +65,7 @@ module.exports = function(params) {
         // Retrieve requested content and forward it
 
         var httpHeaders = {
-            "user-agent": req.headers["user-agent"] || "Wanaplan Proxy Server",
+            "user-agent": req.headers["user-agent"] || "Obsidian Proxy Server",
             "referer": parsedUrl.protocol + "//" + parsedUrl.host + parsedUrl.path
         };
 
