@@ -2,6 +2,7 @@
 
 var url = require("url");
 var http = require("http");
+var https = require("https");
 var lodash = require("lodash");
 
 var Q = require("q");
@@ -81,7 +82,8 @@ module.exports = function(params) {
         };
 
         Q.Promise(function(resolve, reject) {
-                var request = http.request(httpOptions, resolve)
+                var httpModule = (httpOptions.protocol == "https:") ? https : http;
+                var request = httpModule.request(httpOptions, resolve)
                     .on("error", reject);
                 request.end();
             })

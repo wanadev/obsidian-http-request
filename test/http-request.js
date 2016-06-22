@@ -5,6 +5,7 @@ var httpRequest = require("../lib/");
 
 var ROOT_URL = window.location.protocol + "//" + window.location.host;
 var SAMPLES_URL = ROOT_URL + "/samples/";
+var HTTPS_IMAGE_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Collage_of_Six_Cats-02.jpg/1024px-Collage_of_Six_Cats-02.jpg";
 
 describe("http-request", function() {
 
@@ -295,6 +296,19 @@ describe("http-request", function() {
                     expect(result["x-test-header"]).to.equal("ok");
                     expect(result["user-agent"]).to.equal("test-ua");
                     expect(result["referer"]).to.equal("http://fake.referer/");
+                });
+        });
+
+        it("can retrieve files through HTTPS", function() {
+            return httpRequest.getRawProxy(HTTPS_IMAGE_URL)
+                .then(function(result) {
+                    expect(result).to.be.a(Buffer);
+                    expect(result[0]).to.equal(0xFF);
+                    expect(result[1]).to.equal(0xD8);
+                    expect(result[2]).to.equal(0xFF);
+                    expect(result[3]).to.equal(0xE0);
+                    expect(result[4]).to.equal(0x00);
+                    expect(result[5]).to.equal(0x10);
                 });
         });
 
