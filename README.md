@@ -3,6 +3,8 @@
 [![Build Status](https://travis-ci.org/wanadev/obsidian-http-request.svg?branch=master)](https://travis-ci.org/wanadev/obsidian-http-request)
 [![NPM Version](http://img.shields.io/npm/v/obsidian-http-request.svg?style=flat)](https://www.npmjs.com/package/obsidian-http-request)
 [![License](http://img.shields.io/npm/l/obsidian-http-request.svg?style=flat)](https://github.com/wanadev/obsidian-http-request/blob/master/LICENSE)
+[![Dependencies](https://img.shields.io/david/wanadev/obsidian-http-request.svg?maxAge=2592000)]()
+[![Dev Dependencies](https://img.shields.io/david/dev/wanadev/obsidian-http-request.svg?maxAge=2592000)]()
 
 
 ## Quick Start: Server-side
@@ -80,3 +82,8 @@ httpRequest.getJsonProxy("http://www.example.com/hello.json", {headers: {}, allo
 ```
 
 __NOTE:__ `headers` and `allowedMimes` are optional.
+
+
+## Changelog
+
+* **1.1.4:** Updates dependencies
