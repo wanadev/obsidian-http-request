@@ -30,7 +30,7 @@
     "grunt-browserify": "^5.0.0",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-jshint": "^1.0.0",
-    "grunt-mocha-phantomjs": "^3.0.0",
+    "grunt-mocha-phantomjs": "^4.0.0",
     "grunt-shell": "^1.1.2",
     "mocha": "^3.0.0",
     "pm2": "^1.0.0"
