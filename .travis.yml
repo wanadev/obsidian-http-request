@@ -3,4 +3,7 @@ node_js:
     - "stable"
 before_script:
     - node node_modules/.bin/pm2 start -f test/env/test-server.js --name=obsidian-proxy-server &
-script: grunt jshint browserify:test mocha_phantomjs
+script:
+    - grunt jshint browserify:test mocha_phantomjs
+after_script:
+    - ./node_modules/.bin/pm2 kill
