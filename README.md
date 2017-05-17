@@ -5,6 +5,7 @@
 [![License](http://img.shields.io/npm/l/obsidian-http-request.svg?style=flat)](https://github.com/wanadev/obsidian-http-request/blob/master/LICENSE)
 [![Dependencies](https://img.shields.io/david/wanadev/obsidian-http-request.svg?maxAge=2592000)]()
 [![Dev Dependencies](https://img.shields.io/david/dev/wanadev/obsidian-http-request.svg?maxAge=2592000)]()
+[![Greenkeeper badge](https://badges.greenkeeper.io/wanadev/obsidian-http-request.svg)](https://greenkeeper.io/)
 
 
 ## Quick Start: Server-side
