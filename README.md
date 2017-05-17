@@ -1,5 +1,7 @@
 # Obsidian HTTP Request
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/wanadev/obsidian-http-request.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/wanadev/obsidian-http-request.svg?branch=master)](https://travis-ci.org/wanadev/obsidian-http-request)
 [![NPM Version](http://img.shields.io/npm/v/obsidian-http-request.svg?style=flat)](https://www.npmjs.com/package/obsidian-http-request)
 [![License](http://img.shields.io/npm/l/obsidian-http-request.svg?style=flat)](https://github.com/wanadev/obsidian-http-request/blob/master/LICENSE)
