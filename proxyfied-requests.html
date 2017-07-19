@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="UTF-8" />
+        <title>Proxyfied Requests - Obsidian HTTP Request</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+            <link rel="shortcut icon" type="image/png" href="images/obsidian-http-request-logo.svg" />
+        
+        
+            <link type="text/css" rel="stylesheet" href="style/gruvbox-dark.css" />
+        
+            <link type="text/css" rel="stylesheet" href="style/obsidian.css" />
+        
+    </head>
+
+    <body class=" page-with-nav">
+
+        <div class="page">
+
+            
+                <div id="toggle-mobile-menu" title="Toggle menu">☰</div>
+            
+
+            
+                <nav class="links">
+                    <ul>
+                        <li><a href="https://github.com/wanadev/obsidian-http-request">Github</a></li><li><a href="https://www.npmjs.com/package/obsidian-http-request">NPM</a></li>
+                    </ul>
+                </nav>
+            
+
+            <header>
+                <h1>
+                    
+                        <img src="images/obsidian-http-request-logo.svg"  alt="Obsidian HTTP Request logo" />
+                    
+                    <span>Obsidian HTTP Request</span>
+                </h1>
+            </header>
+
+            <div class="content">
+
+                
+                    <nav>
+                        
+                            
+
+    <ul class="menu">
+        
+            
+            <li>
+                <a href="index.html" >Home</a>
+                
+            </li>
+        
+            
+            <li>
+                <a href="direct-requests.html" >Direct Requests</a>
+                
+            </li>
+        
+            
+            <li>
+                <a href="proxyfied-requests.html" class="active">Proxyfied Requests</a>
+                
+                    
+
+    
+    <ul class="toc">
+        
+            <li>
+                <a href="#proxy-server">Proxy Server</a>
+                
+            </li>
+        
+            <li>
+                <a href="#simple-requests-http-get-">Simple Requests (HTTP GET)</a>
+                
+                    
+    <ul class="toc">
+        
+            <li>
+                <a href="#httprequest-gettextproxy">httpRequest.getTextProxy</a>
+                
+            </li>
+        
+            <li>
+                <a href="#httprequest-getjsonproxy">httpRequest.getJsonProxy</a>
+                
+            </li>
+        
+            <li>
+                <a href="#httprequest-getrawproxy">httpRequest.getRawProxy</a>
+                
+            </li>
+        
+    </ul>
+
+                
+            </li>
+        
+            <li>
+                <a href="#advanced-requests">Advanced Requests</a>
+                
+            </li>
+        
+    </ul>
+
+
+
+                
+            </li>
+        
+    </ul>
+
+
+                        
+                    </nav>
+                
+                <article>
+                    <h1 id="proxyfied-requests">Proxyfied Requests</h1>
+<p>Proxyfied Request are HTTP request that are send to a proxy server that will
+forward them to the destination server. This can be useful when you want to
+retrieve assets from random sites and avoiding CORS.</p>
+<p>To make a request, just require the module and use the method that best fit
+your need.</p>
+<pre><code class="hljs javascript"><span class="hljs-keyword">const</span> httpRequest = <span class="hljs-built_in">require</span>(<span class="hljs-string">"obsidian-http-request"</span>);</code></pre>
+
+
+<h2 id="proxy-server">Proxy Server</h2>
+<p>TODO</p>
+<h2 id="simple-requests-http-get-">Simple Requests (HTTP GET)</h2>
+<p>When you just want to fetch assets, you can use simplified <code>get*Proxy</code> methods,
+depending of what kind of data you retrieve.</p>
+<p>All the following methods can take an additional argument to configure some
+behavior of the proxy:</p>
+<pre><code class="hljs javascript">httpRequest.get*<span class="hljs-built_in">Proxy</span>(url, {
+    <span class="hljs-attr">headers</span>: {},      <span class="hljs-comment">// Additional custom HTTP headers</span>
+    allowedMimes: []  <span class="hljs-comment">// Avoid the proxy to download data types that</span>
+                      <span class="hljs-comment">//   are not listed here</span>
+}).then(...);</code></pre>
+
+<h3 id="httprequest-gettextproxy">httpRequest.getTextProxy</h3>
+<p>This method can be used to retrieve text. It returns a <code>String</code>.</p>
+<pre><code class="hljs javascript">httpRequest.getTextProxy(<span class="hljs-string">"http://www.example.com/hello.txt"</span>)
+    .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">result</span>) </span>{
+        <span class="hljs-built_in">console</span>.log(result);  <span class="hljs-comment">// -&gt; String</span>
+    })
+    .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error</span>) </span>{
+        <span class="hljs-built_in">console</span>.error(error);
+    });</code></pre>
+
+<h3 id="httprequest-getjsonproxy">httpRequest.getJsonProxy</h3>
+<p>This method can be used to retrieve JSON. It returns native Javascript objects
+from the JSON.</p>
+<pre><code class="hljs javascript">httpRequest.getJsonProxy(<span class="hljs-string">"http://www.example.com/hello.json"</span>)
+    .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">result</span>) </span>{
+        <span class="hljs-built_in">console</span>.log(result);  <span class="hljs-comment">// -&gt; {}</span>
+    })
+    .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error</span>) </span>{
+        <span class="hljs-built_in">console</span>.error(error);
+    });</code></pre>
+
+<h3 id="httprequest-getrawproxy">httpRequest.getRawProxy</h3>
+<p>This method can be used to retrieve raw (possibly binary) data. It returns
+a <a href="https://nodejs.org/api/buffer.html">Node.js <code>Buffer</code></a>.</p>
+<pre><code class="hljs javascript">httpRequest.getRawProxy(<span class="hljs-string">"http://www.example.com/hello.zip"</span>)
+    .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">result</span>) </span>{
+        <span class="hljs-built_in">console</span>.log(result);  <span class="hljs-comment">// -&gt; Node.js Buffer</span>
+    })
+    .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error</span>) </span>{
+        <span class="hljs-built_in">console</span>.error(error);
+    });</code></pre>
+
+
+<h2 id="advanced-requests">Advanced Requests</h2>
+<p>TODO</p>
+
+                </article>
+            </div>
+
+            <footer>
+                Copyright (c)  2017 Wanadev
+- <a href="http://www.wanadev.fr/">www.wanadev.fr</a><br />
+Unless otherwise specified, this documentation is published under the
+<a href="http://creativecommons.org/licenses/by-sa/3.0/deed.en">cc by-sa 3.0</a> license<br />
+Generated using <a href="https://wanadev.github.io/enlightme/\">Enlight'me</a> 0.1.1
+
+            </footer>
+
+        </div>
+
+        <script>
+
+(function() {
+
+    var MENU_UNFOLDED_CLASS = "mobile-menu-unfolded";
+
+    var menuButton = document.getElementById("toggle-mobile-menu");
+    var menuItems = document.querySelectorAll(".content nav a");
+
+    function getAbsolutePosition(element) {
+        if (typeof(element) == "string") {
+            element = document.getElementById(element);
+        }
+        if (!(element instanceof Element)) {
+            return {x: 0, y: 0};
+        }
+
+        var css;
+        var origElement = element;
+
+        try {
+            css = getComputedStyle(element);
+        } catch (e) {
+            return {x: 0, y: 0};
+        }
+
+        if (!css) {
+            return {x: 0, y: 0};
+        }
+
+        var x = -parseInt(css.borderLeftWidth);
+        var y = -parseInt(css.borderTopWidth);
+
+        while (element.offsetParent) {
+            css = getComputedStyle(element);
+
+            x += element.offsetLeft || 0;
+            x += parseInt(css.borderLeftWidth);
+
+            y += element.offsetTop || 0;
+            y += parseInt(css.borderTopWidth);
+
+            element = element.offsetParent;
+        }
+
+        element = origElement;
+
+        while (element.parentNode && !(element instanceof HTMLBodyElement)) {
+            x -= element.scrollLeft || 0;
+            y -= element.scrollTop || 0;
+            element = element.parentNode;
+        }
+
+        return {x: x, y: y};
+    };
+
+    function openMenu() {
+        document.body.classList.add(MENU_UNFOLDED_CLASS);
+    }
+
+    function closeMenu() {
+        document.body.classList.remove(MENU_UNFOLDED_CLASS);
+    }
+
+    function toggleMenu() {
+        document.body.classList.toggle(MENU_UNFOLDED_CLASS);
+    }
+
+    function _onMenuItemClicked(event) {
+        var href = this.getAttribute("href");
+
+        if (href[0] != "#") {
+            return;
+        }
+
+        event.preventDefault();
+
+        var anchor = href.substr(1, href.length-1);
+        var anchorPosition = getAbsolutePosition(anchor);
+        document.scrollingElement.scrollTop = anchorPosition.y - menuButton.offsetHeight;
+
+        closeMenu();
+    }
+
+    menuButton.onclick = toggleMenu;
+    menuItems.forEach(function(item) {
+        item.onclick = _onMenuItemClicked;
+    });
+
+})();
+
+</script>
+
+    </body>
+
+</html>
