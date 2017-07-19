@@ -165,6 +165,7 @@ describe("http-request", function() {
             })
                 .then(function(data) {
                     expect(data).to.eql(body);
+                    expect(data.toString("ascii", 0, 4)).to.equal("ABCD");
                 });
         });
 
@@ -320,7 +321,28 @@ describe("http-request", function() {
     });
 
     describe("requestProxy", function() {
-        // TODO
+
+        it("uses GET as default method", function() {
+            return httpRequest.requestProxy(SAMPLES_URL + "binary.bin")
+                .then(function(data) {
+                    expect(data.readUInt32BE(1)).to.equal(0xBADDCAFE);
+                });
+        });
+
+        it("can use POST method and send custom body", function() {
+            var body = Buffer.from("ABCDÉ\x00\xFF");
+            return httpRequest.requestProxy("/echo-body", {
+                method: "POST",
+                body: body,
+                headers: {
+                    "content-type": "application/octet-stream"
+                }
+            })
+                .then(function(data) {
+                    expect(data).to.eql(body);
+                });
+        });
+
     });
 
     describe("*Proxy", function() {
@@ -413,6 +435,18 @@ describe("http-request", function() {
                 })
                 .then(function(result) {
                     expect(result["x-test-header"]).to.equal("ok");
+                });
+        });
+
+        it("cannot use forbiddenHTTP methods", function() {
+            return httpRequest.requestProxy("/put-test", {
+                method: "PUT"
+            })
+                .then(function(result) {
+                    throw new Error("ShouldNotBeCalled");
+                })
+                .catch(function(error) {
+                    expect(error).to.match(/HttpStatus405/);
                 });
         });
 

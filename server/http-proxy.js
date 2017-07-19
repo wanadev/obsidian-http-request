@@ -9,7 +9,8 @@ var Q = require("q");
 
 var DEFAULT_OPTIONS = {
     maxContentLength: 5 * 1024 * 1024,  // 5 MiB
-    allowedPorts: [80, 443]
+    allowedPorts: [80, 443],
+    allowedMethods: ["GET"]
 };
 
 module.exports = function(params) {
@@ -38,6 +39,12 @@ module.exports = function(params) {
 
         if (proxyOptions === null || !proxyOptions.url) {
             res.sendStatus(400);
+            next();
+            return;
+        }
+
+        if (proxyOptions.method && !lodash.includes(options.allowedMethods, proxyOptions.method)) {
+            res.sendStatus(405);
             next();
             return;
         }
@@ -77,7 +84,7 @@ module.exports = function(params) {
             hostname: parsedUrl.hostname,
             port: parsedUrl.port,
             path: parsedUrl.path,
-            method: "GET",
+            method: proxyOptions.method ? proxyOptions.method : "GET",
             headers: httpHeaders
         };
 
@@ -85,6 +92,12 @@ module.exports = function(params) {
                 var httpModule = (httpOptions.protocol == "https:") ? https : http;
                 var request = httpModule.request(httpOptions, resolve)
                     .on("error", reject);
+
+                if (proxyOptions.body) {
+                    var body = new Buffer.from(proxyOptions.body, "base64");
+                    request.write(body);
+                }
+
                 request.end();
             })
             .then(function(response) {
