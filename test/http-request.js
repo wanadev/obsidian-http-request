@@ -363,6 +363,17 @@ describe("http-request", function() {
                 });
         });
 
+        it("can resolve relative URLs", function() {
+            return httpRequest.getJsonProxy("./echo-headers", {
+                    headers: {
+                        "x-test-header": "ok",
+                    }
+                })
+                .then(function(result) {
+                    expect(result["x-test-header"]).to.equal("ok");
+                });
+        });
+
     });
 
 });
