@@ -145,6 +145,44 @@ describe("http-request", function() {
 
     });
 
+    describe("request", function() {
+
+        it("uses GET as default method", function() {
+            return httpRequest.request(SAMPLES_URL + "binary.bin")
+                .then(function(data) {
+                    expect(data.readUInt32BE(1)).to.equal(0xBADDCAFE);
+                });
+        });
+
+        it("can use POST method and send custom body", function() {
+            var body = Buffer.from("ABCDÉ\x00\xFF");
+            return httpRequest.request("/echo-body", {
+                method: "POST",
+                body: body,
+                headers: {
+                    "content-type": "application/octet-stream"
+                }
+            })
+                .then(function(data) {
+                    expect(data).to.eql(body);
+                });
+        });
+
+        it("can set custom headers", function() {
+            return httpRequest.request("/echo-headers", {
+                method: "GET",
+                headers: {
+                    "x-foobar": "baz"
+                }
+            })
+                .then(function(rawResult) {
+                    var result = JSON.parse(rawResult.toString());
+                    expect(result["x-foobar"]).to.equal("baz");
+                });
+        });
+
+    });
+
     describe("getRawProxy", function() {
 
         it("can retrieve an ASCII text file", function() {
@@ -279,6 +317,10 @@ describe("http-request", function() {
                 });
         });
 
+    });
+
+    describe("requestProxy", function() {
+        // TODO
     });
 
     describe("*Proxy", function() {

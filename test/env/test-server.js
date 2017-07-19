@@ -12,6 +12,11 @@ app.get("/echo-headers", function(req, res) {
     res.send(JSON.stringify(req.headers));
 });
 
+app.use("/echo-body", bodyParser.raw({type: "application/octet-stream"}));
+app.post("/echo-body", function(req, res) {
+    res.send(req.body);
+});
+
 app.get("/large-content", function(req, res) {
     var buffer = new Buffer(6 * 1024 * 1024);  // 6 MiB
     res.send(buffer);
