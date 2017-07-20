@@ -74,6 +74,27 @@
             <li>
                 <a href="#proxy-server">Proxy Server</a>
                 
+                    
+    <ul class="toc">
+        
+            <li>
+                <a href="#implementing-the-proxy-server">Implementing The Proxy Server</a>
+                
+            </li>
+        
+            <li>
+                <a href="#proxy-status-code">Proxy Status Code</a>
+                
+            </li>
+        
+    </ul>
+
+                
+            </li>
+        
+            <li>
+                <a href="#client-side-configuration">Client-Side Configuration</a>
+                
             </li>
         
             <li>
@@ -114,6 +135,12 @@
                 
             </li>
         
+            
+            <li>
+                <a href="faq.html" >FAQ</a>
+                
+            </li>
+        
     </ul>
 
 
@@ -125,16 +152,101 @@
 <p>Proxyfied Request are HTTP request that are send to a proxy server that will
 forward them to the destination server. This can be useful when you want to
 retrieve assets from random sites and avoiding CORS.</p>
+<h2 id="proxy-server">Proxy Server</h2>
+<p>To use proxyfied request, your server must run a proxy that must be accessible
+on the <strong>same orgine</strong> (same domaine, port and protocol) that the application
+page.</p>
+<p>Obsidian Proxy Server is not a standalone application but a middleware that can
+be used with <a href="http://expressjs.com/">Express</a>.</p>
+<h3 id="implementing-the-proxy-server">Implementing The Proxy Server</h3>
+<p>To implement this server in your application, you first have to install
+required dependencies:</p>
+<pre><code class="hljs sh">npm install --save obsidian-http-request express body-parser</code></pre>
+
+<p>Then you can use the proxy middleware in your Express application:</p>
+<pre><code class="hljs javascript"><span class="hljs-meta">"use strict"</span>;
+
+<span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">"express"</span>);
+<span class="hljs-keyword">const</span> bodyParser = <span class="hljs-built_in">require</span>(<span class="hljs-string">"body-parser"</span>);
+<span class="hljs-keyword">const</span> proxyMiddleware = <span class="hljs-built_in">require</span>(<span class="hljs-string">"obsidian-http-request/server/http-proxy"</span>);
+
+<span class="hljs-keyword">const</span> PORT = process.env.PORT || <span class="hljs-number">3042</span>;
+
+<span class="hljs-keyword">const</span> app = express();
+
+app.use(<span class="hljs-string">"/proxy"</span>, bodyParser.raw({<span class="hljs-attr">type</span>: <span class="hljs-string">"application/json"</span>}));
+app.use(<span class="hljs-string">"/proxy"</span>, proxyMiddleware({
+    <span class="hljs-attr">maxContentLength</span>: <span class="hljs-number">5</span> * <span class="hljs-number">1024</span> * <span class="hljs-number">1024</span>,  <span class="hljs-comment">// Allows to transfer files of 5 MiB max</span>
+    allowedPorts: [<span class="hljs-number">80</span>, <span class="hljs-number">443</span>],            <span class="hljs-comment">// Allows to download from ports 80 (http) and 443 (https)</span>
+    allowedMethods: [<span class="hljs-string">"GET"</span>]             <span class="hljs-comment">// Allows to forward only GET requests</span>
+}));
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Starting Obsidian Proxy Server on 0.0.0.0:<span class="hljs-subst">${PORT}</span>`</span>);
+app.listen(PORT);</code></pre>
+
+<p><strong>NOTE:</strong> By default the client library assumes that the proxy URL is <code>/proxy</code>.
+If you change this route, you will have to configure it on the client side.</p>
+<p>Finally, to run the server you can simply run the previous script using Node:</p>
+<pre><code class="hljs sh">node server.js</code></pre>
+
+<p><strong>NOTE:</strong> for production environment you will probably want to use a <a href="http://expressjs.com/en/advanced/pm.html">process
+manager</a> to run the server-side application.</p>
+<h3 id="proxy-status-code">Proxy Status Code</h3>
+<p>When the proxy operates, it can return various HTTP status code depending of
+the request and encountered errors:</p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>Ok</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Bad Request: this code is used in several cases: <ul><li>when you make a request with a wrong protocol (other than <code>http</code> and <code>https</code>),</li><li>when you try to make a request on a port that is not in the server&#39;s <code>allowedPorts</code> list,</li><li>when the request made to the proxy is invalid or incomplete (in this case, it is probably a version mismatch between the client-side and server-side library).</li></ul></td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found: the proxy cannot access the resource on the remote server. This can be caused by several things: <ul><li>the URL is wrong or it cannot be accessed from the proxy server,</li><li>the remote server encountered an error (5XX),</li><li>the remote server requires to be authenticated to access the resource,</li><li>...</li></ul> Please note that the proxy server cannot follow redirection (3XX), so this will also ends with a 404 status code.</td>
+</tr>
+<tr>
+<td>405</td>
+<td>Method Not Allowed: you tried to make a request using a method that is not in the server&#39;s <code>allowedMethods</code> list.</td>
+</tr>
+<tr>
+<td>406</td>
+<td>The mimetype of the requested resource is not in the <code>allowedMimes</code> list that was sent with the request (<code>httpRequest.get*Proxy(url, {allowedMimes: [...]})</code>).</td>
+</tr>
+<tr>
+<td>413</td>
+<td>Too Large: the requested resource is larger than the server&#39;s <code>maxContentLength</code> configuration.</td>
+</tr>
+<tr>
+<td>500</td>
+<td>An error occurred in the proxy server.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="client-side-configuration">Client-Side Configuration</h2>
+<p>By default the client library assumes that the proxy URL is <code>/proxy</code>. If you
+change this route in your server-side implementation, you will have to
+configure it on the client side:</p>
+<pre><code class="hljs javascript"><span class="hljs-keyword">const</span> httpRequest = <span class="hljs-built_in">require</span>(<span class="hljs-string">"obsidian-http-request"</span>);
+httpRequest.proxyPath = <span class="hljs-string">"/custom/proxy-route"</span>;</code></pre>
+
+
+<h2 id="simple-requests-http-get-">Simple Requests (HTTP GET)</h2>
+<p>When you just want to fetch assets, you can use simplified <code>get*Proxy</code> methods,
+depending of what kind of data you retrieve.</p>
 <p>To make a request, just require the module and use the method that best fit
 your need.</p>
 <pre><code class="hljs javascript"><span class="hljs-keyword">const</span> httpRequest = <span class="hljs-built_in">require</span>(<span class="hljs-string">"obsidian-http-request"</span>);</code></pre>
 
-
-<h2 id="proxy-server">Proxy Server</h2>
-<p>TODO</p>
-<h2 id="simple-requests-http-get-">Simple Requests (HTTP GET)</h2>
-<p>When you just want to fetch assets, you can use simplified <code>get*Proxy</code> methods,
-depending of what kind of data you retrieve.</p>
 <p>All the following methods can take an additional argument to configure some
 behavior of the proxy:</p>
 <pre><code class="hljs javascript">httpRequest.get*<span class="hljs-built_in">Proxy</span>(url, {
@@ -177,7 +289,28 @@ a <a href="https://nodejs.org/api/buffer.html">Node.js <code>Buffer</code></a>.<
 
 
 <h2 id="advanced-requests">Advanced Requests</h2>
-<p>TODO</p>
+<p>Obsidian HTTP Request provides a method to allow you to send more advanced
+requests (if you have to use an other method than <code>GET</code>, custom headers,
+body,...).</p>
+<p>Here is an example to send and receive JSON data:</p>
+<pre><code class="hljs javascript">httpRequest.requestProxy(<span class="hljs-string">"http://www.example.com/do-something"</span>, {
+    <span class="hljs-attr">method</span>: <span class="hljs-string">"POST"</span>,
+    <span class="hljs-attr">headers</span>: {
+        <span class="hljs-string">"content-type"</span>: <span class="hljs-string">"application/json"</span>,
+        <span class="hljs-string">"x-foo"</span>: <span class="hljs-string">"bar"</span>
+    },
+    <span class="hljs-attr">body</span>: Buffer.from(<span class="hljs-built_in">JSON</span>.stringify({<span class="hljs-attr">foo</span>: <span class="hljs-string">"bar"</span>})),  <span class="hljs-comment">// body must be a Node Buffer or null</span>
+    allowedMimes: [<span class="hljs-string">"application/json"</span>]                <span class="hljs-comment">// Only allows JSON response</span>
+})
+    .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">resultBuffer</span>) </span>{                    <span class="hljs-comment">// response is also a Node Buffer</span>
+        <span class="hljs-keyword">var</span> result = <span class="hljs-built_in">JSON</span>.parse(resultBuffer.toString());
+        <span class="hljs-built_in">console</span>.log(result);
+    })
+    .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error</span>) </span>{
+        <span class="hljs-built_in">console</span>.error(error);
+    });</code></pre>
+
+
 
                 </article>
             </div>

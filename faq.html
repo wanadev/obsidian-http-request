@@ -4,7 +4,7 @@
 
     <head>
         <meta charset="UTF-8" />
-        <title>Obsidian HTTP Request</title>
+        <title>FAQ - Obsidian HTTP Request</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         
             <link rel="shortcut icon" type="image/png" href="images/obsidian-http-request-logo.svg" />
@@ -52,7 +52,7 @@
         
             
             <li>
-                <a href="index.html" class="active">Home</a>
+                <a href="index.html" >Home</a>
                 
             </li>
         
@@ -70,7 +70,27 @@
         
             
             <li>
-                <a href="faq.html" >FAQ</a>
+                <a href="faq.html" class="active">FAQ</a>
+                
+                    
+
+    
+    <ul class="toc">
+        
+            <li>
+                <a href="#how-to-retrieve-an-image-through-the-proxy-">How To Retrieve An Image Through The Proxy?</a>
+                
+            </li>
+        
+            <li>
+                <a href="#how-to-use-a-node-buffer-in-a-browser-">How To Use a Node Buffer in a Browser?</a>
+                
+            </li>
+        
+    </ul>
+
+
+
                 
             </li>
         
@@ -81,20 +101,35 @@
                     </nav>
                 
                 <article>
-                    <p><strong>Obsidian HTTP Request</strong> is an helper library that allows you to download
-assets and make HTTP requests either directly or through a proxy (to avoid CORS
-issues, for example when using images from an other domain with a canvas).</p>
-<p><img src="./images/obsidian-http-request-schema.png" alt="Obsidian HTTP Request Proxy Schema"></p>
-<p>Example:</p>
-<pre><code class="hljs javascript"><span class="hljs-keyword">const</span> httpRequest = <span class="hljs-built_in">require</span>(<span class="hljs-string">"obsidian-http-request"</span>);
+                    <h1 id="frequently-asked-question">Frequently Asked Question</h1>
+<h2 id="how-to-retrieve-an-image-through-the-proxy-">How To Retrieve An Image Through The Proxy?</h2>
+<p>You can retrieve an image using the <code>httpRequest.getRawProxy</code> method and then
+creating the <code>Image</code> element using a Blob URL:</p>
+<pre><code>httpRequest.getRawProxy(<span class="hljs-string">"http://example.org/hello.jpg"</span>)
+    .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">imageBuffer</span>) </span>{
+        <span class="hljs-keyword">var</span> imageBlob = <span class="hljs-keyword">new</span> Blob([imageBuffer], {<span class="hljs-attr">type</span>: <span class="hljs-string">"image/jpeg"</span>});
+        <span class="hljs-keyword">var</span> imageBlobUrl = URL.createObjectURL(imageBlob);
 
-httpRequest.getText(<span class="hljs-string">"http://example.com/hello.txt"</span>)
-    .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">result</span>) </span>{
-        <span class="hljs-built_in">console</span>.log(result);
+        <span class="hljs-keyword">var</span> img = <span class="hljs-keyword">new</span> Image();
+
+        img.onload = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Image loaded:"</span>, img);
+        };
+
+        img.onerror = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error</span>) </span>{
+            <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"Unable to load the image:"</span>, error);
+        };
+
+        img.src = imageBlobUrl;
     })
-    .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error</span>) </span>{
-        <span class="hljs-built_in">console</span>.error(error);
-    });</code></pre>
+    .done();</code></pre>
+
+<h2 id="how-to-use-a-node-buffer-in-a-browser-">How To Use a Node Buffer in a Browser?</h2>
+<p>If you are using <a href="http://browserify.org/">Browserify</a> you have nothing to do, it will automatically
+add required libraries to your bundle.</p>
+<p>If you are not using Browserify, you have to use the <a href="https://github.com/feross/buffer">buffer
+library</a> library.</p>
+
                 </article>
             </div>
 

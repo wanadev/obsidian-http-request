@@ -109,6 +109,12 @@
                 
             </li>
         
+            
+            <li>
+                <a href="faq.html" >FAQ</a>
+                
+            </li>
+        
     </ul>
 
 
@@ -160,7 +166,28 @@ a <a href="https://nodejs.org/api/buffer.html">Node.js <code>Buffer</code></a>.<
 
 
 <h2 id="advanced-requests">Advanced Requests</h2>
-<p>TODO</p>
+<p>Obsidian HTTP Request provides a method to allow you to send more advanced
+requests (if you have to use an other method than <code>GET</code>, custom headers,
+body,...).</p>
+<p>Here is an example to send and receive JSON data:</p>
+<pre><code class="hljs javascript">httpRequest.request(<span class="hljs-string">"http://www.example.com/do-something"</span>, {
+    <span class="hljs-attr">method</span>: <span class="hljs-string">"POST"</span>,
+    <span class="hljs-attr">headers</span>: {
+        <span class="hljs-string">"content-type"</span>: <span class="hljs-string">"application/json"</span>,
+        <span class="hljs-string">"x-foo"</span>: <span class="hljs-string">"bar"</span>
+    },
+    <span class="hljs-attr">body</span>: Buffer.from(<span class="hljs-built_in">JSON</span>.stringify({<span class="hljs-attr">foo</span>: <span class="hljs-string">"bar"</span>}))  <span class="hljs-comment">// body must be a Node Buffer or null</span>
+})
+    .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">resultBuffer</span>) </span>{                   <span class="hljs-comment">// response is also a Node Buffer</span>
+        <span class="hljs-keyword">var</span> result = <span class="hljs-built_in">JSON</span>.parse(resultBuffer.toString());
+        <span class="hljs-built_in">console</span>.log(result);
+    })
+    .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error</span>) </span>{
+        <span class="hljs-built_in">console</span>.error(error);
+    });</code></pre>
+
+
+
 
                 </article>
             </div>
