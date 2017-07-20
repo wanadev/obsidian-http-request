@@ -68,7 +68,29 @@ httpRequest.getRaw("http://www.example.com/hello.zip")
 
 ## Advanced Requests
 
-TODO
+Obsidian HTTP Request provides a method to allow you to send more advanced
+requests (if you have to use an other method than `GET`, custom headers,
+body,...).
+
+Here is an example to send and receive JSON data:
+
+```javascript
+httpRequest.request("http://www.example.com/do-something", {
+    method: "POST",
+    headers: {
+        "content-type": "application/json",
+        "x-foo": "bar"
+    },
+    body: Buffer.from(JSON.stringify({foo: "bar"}))  // body must be a Node Buffer or null
+})
+    .then(function(resultBuffer) {                   // response is also a Node Buffer
+        var result = JSON.parse(resultBuffer.toString());
+        console.log(result);
+    })
+    .catch(function(error) {
+        console.error(error);
+    });
+```
 
 
 

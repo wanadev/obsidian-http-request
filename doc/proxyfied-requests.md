@@ -25,7 +25,7 @@ be used with [Express][express].
 To implement this server in your application, you first have to install
 required dependencies:
 
-```
+```sh
 npm install --save obsidian-http-request express body-parser
 ```
 
@@ -49,7 +49,7 @@ app.use("/proxy", proxyMiddleware({
     allowedMethods: ["GET"]             // Allows to forward only GET requests
 }));
 
-console.log(`Starting Obsidian Proxy Server on 0.0.0.0: ${PORT}`);
+console.log(`Starting Obsidian Proxy Server on 0.0.0.0:${PORT}`);
 app.listen(PORT);
 ```
 
@@ -58,7 +58,7 @@ If you change this route, you will have to configure it on the client side.
 
 Finally, to run the server you can simply run the previous script using Node:
 
-```
+```sh
 node server.js
 ```
 
@@ -163,9 +163,31 @@ httpRequest.getRawProxy("http://www.example.com/hello.zip")
 
 ## Advanced Requests
 
-TODO
+Obsidian HTTP Request provides a method to allow you to send more advanced
+requests (if you have to use an other method than `GET`, custom headers,
+body,...).
+
+Here is an example to send and receive JSON data:
 
 
+```javascript
+httpRequest.requestProxy("http://www.example.com/do-something", {
+    method: "POST",
+    headers: {
+        "content-type": "application/json",
+        "x-foo": "bar"
+    },
+    body: Buffer.from(JSON.stringify({foo: "bar"})),  // body must be a Node Buffer or null
+    allowedMimes: ["application/json"]                // Only allows JSON response
+})
+    .then(function(resultBuffer) {                    // response is also a Node Buffer
+        var result = JSON.parse(resultBuffer.toString());
+        console.log(result);
+    })
+    .catch(function(error) {
+        console.error(error);
+    });
+```
 
 
 [buffer]: https://nodejs.org/api/buffer.html
