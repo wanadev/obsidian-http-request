@@ -10,13 +10,6 @@ Proxyfied Request are HTTP request that are send to a proxy server that will
 forward them to the destination server. This can be useful when you want to
 retrieve assets from random sites and avoiding CORS.
 
-To make a request, just require the module and use the method that best fit
-your need.
-
-```javascript
-const httpRequest = require("obsidian-http-request");
-```
-
 
 ## Proxy Server
 
@@ -88,10 +81,29 @@ the request and encountered errors:
 | 500    | An error occurred in the proxy server. |
 
 
+## Client-Side Configuration
+
+By default the client library assumes that the proxy URL is `/proxy`. If you
+change this route in your server-side implementation, you will have to
+configure it on the client side:
+
+```javascript
+const httpRequest = require("obsidian-http-request");
+httpRequest.proxyPath = "/custom/proxy-route";
+```
+
+
 ## Simple Requests (HTTP GET)
 
 When you just want to fetch assets, you can use simplified `get*Proxy` methods,
 depending of what kind of data you retrieve.
+
+To make a request, just require the module and use the method that best fit
+your need.
+
+```javascript
+const httpRequest = require("obsidian-http-request");
+```
 
 All the following methods can take an additional argument to configure some
 behavior of the proxy:
