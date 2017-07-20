@@ -20,7 +20,72 @@ const httpRequest = require("obsidian-http-request");
 
 ## Proxy Server
 
-TODO
+To use proxyfied request, your server must run a proxy that must be accessible
+on the **same orgine** (same domaine, port and protocol) that the application
+page.
+
+Obsidian Proxy Server is not a standalone application but a middleware that can
+be used with [Express][express].
+
+### Implementing The Proxy Server
+
+To implement this server in your application, you first have to install
+required dependencies:
+
+```
+npm install --save obsidian-http-request express body-parser
+```
+
+Then you can use the proxy middleware in your Express application:
+
+```javascript
+"use strict";
+
+const express = require("express");
+const bodyParser = require("body-parser");
+const proxyMiddleware = require("obsidian-http-request/server/http-proxy");
+
+const PORT = process.env.PORT || 3042;
+
+const app = express();
+
+app.use("/proxy", bodyParser.raw({type: "application/json"}));
+app.use("/proxy", proxyMiddleware({
+    maxContentLength: 5 * 1024 * 1024,  // Allows to transfer files of 5 MiB max
+    allowedPorts: [80, 443],            // Allows to download from ports 80 (http) and 443 (https)
+    allowedMethods: ["GET"]             // Allows to forward only GET requests
+}));
+
+console.log(`Starting Obsidian Proxy Server on 0.0.0.0: ${PORT}`);
+app.listen(PORT);
+```
+
+__NOTE:__ By default the client library assumes that the proxy URL is `/proxy`.
+If you change this route, you will have to configure it on the client side.
+
+Finally, to run the server you can simply run the previous script using Node:
+
+```
+node server.js
+```
+
+__NOTE:__ for production environment you will probably want to use a [process
+manager][pm] to run the server-side application.
+
+### Proxy Status Code
+
+When the proxy operates, it can return various HTTP status code depending of
+the request and encountered errors:
+
+| Status | Meaning |
+|--------|---------|
+| 200    | Ok      |
+| 400    | Bad Request: this code is used in several cases: <ul><li>when you make a request with a wrong protocol (other than `http` and `https`),</li><li>when you try to make a request on a port that is not in the server's `allowedPorts` list,</li><li>when the request made to the proxy is invalid or incomplete (in this case, it is probably a version mismatch between the client-side and server-side library).</li></ul> |
+| 404    | Not Found: the proxy cannot access the resource on the remote server. This can be caused by several things: <ul><li>the URL is wrong or it cannot be accessed from the proxy server,</li><li>the remote server encountered an error (5XX),</li><li>the remote server requires to be authenticated to access the resource,</li><li>...</li></ul> Please note that the proxy server cannot follow redirection (3XX), so this will also ends with a 404 status code. |
+| 405    | Method Not Allowed: you tried to make a request using a method that is not in the server's `allowedMethods` list. |
+| 406    | The mimetype of the requested resource is not in the `allowedMimes` list that was sent with the request (`httpRequest.get*Proxy(url, {allowedMimes: [...]})`). |
+| 413    | Too Large: the requested resource is larger than the server's `maxContentLength` configuration. |
+| 500    | An error occurred in the proxy server. |
 
 
 ## Simple Requests (HTTP GET)
@@ -92,3 +157,5 @@ TODO
 
 
 [buffer]: https://nodejs.org/api/buffer.html
+[express]: http://expressjs.com/
+[pm]: http://expressjs.com/en/advanced/pm.html
