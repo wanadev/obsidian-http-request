@@ -8,7 +8,8 @@ autotoc: true
 
 ## How To Retrieve An Image Through The Proxy?
 
-You can retrieve an image using the `httpRequest.getRawProxy` method and then creating the `Image` element using a Blob URL:
+You can retrieve an image using the `httpRequest.getRawProxy` method and then
+creating the `Image` element using a Blob URL:
 
 ```javascrtipt
 httpRequest.getRawProxy("http://example.org/hello.jpg")
