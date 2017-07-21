@@ -124,14 +124,14 @@
                 <article>
                     <h1 id="direct-requests">Direct Requests</h1>
 <p>Direct Request are simply AJAX request that are not proxyfied.</p>
-<p>To make a request, just require the module and use the method that best fit
+<p>To make a request, just require the module and use the method that best fits
 your need.</p>
 <pre><code class="hljs javascript"><span class="hljs-keyword">const</span> httpRequest = <span class="hljs-built_in">require</span>(<span class="hljs-string">"obsidian-http-request"</span>);</code></pre>
 
 
 <h2 id="simple-requests-http-get-">Simple Requests (HTTP GET)</h2>
 <p>When you just want to fetch assets, you can use simplified <code>get*</code> methods,
-depending of what kind of data you retrieve.</p>
+depending on what kind of data you retrieve.</p>
 <h3 id="httprequest-gettext">httpRequest.getText</h3>
 <p>This method can be used to retrieve text. It returns a <code>String</code>.</p>
 <pre><code class="hljs javascript">httpRequest.getText(<span class="hljs-string">"http://www.example.com/hello.txt"</span>)
@@ -167,9 +167,9 @@ a <a href="https://nodejs.org/api/buffer.html">Node.js <code>Buffer</code></a>.<
 
 <h2 id="advanced-requests">Advanced Requests</h2>
 <p>Obsidian HTTP Request provides a method to allow you to send more advanced
-requests (if you have to use an other method than <code>GET</code>, custom headers,
+requests (if you have to use a different method than <code>GET</code>, custom headers,
 body,...).</p>
-<p>Here is an example to send and receive JSON data:</p>
+<p>Here is an example of how to send and receive JSON data:</p>
 <pre><code class="hljs javascript">httpRequest.request(<span class="hljs-string">"http://www.example.com/do-something"</span>, {
     <span class="hljs-attr">method</span>: <span class="hljs-string">"POST"</span>,
     <span class="hljs-attr">headers</span>: {

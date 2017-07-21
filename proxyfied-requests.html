@@ -149,17 +149,17 @@
                 
                 <article>
                     <h1 id="proxyfied-requests">Proxyfied Requests</h1>
-<p>Proxyfied Request are HTTP request that are send to a proxy server that will
+<p>Proxyfied Request are HTTP requests that are sent to a proxy server that will
 forward them to the destination server. This can be useful when you want to
-retrieve assets from random sites and avoiding CORS.</p>
+retrieve assets from random sites and avoid CORS.</p>
 <h2 id="proxy-server">Proxy Server</h2>
-<p>To use proxyfied request, your server must run a proxy that must be accessible
-on the <strong>same orgine</strong> (same domaine, port and protocol) that the application
+<p>To use proxyfied requests, your server must run a proxy that must be accessible
+on the <strong>same origin</strong> (same domain, port and protocol) as the application
 page.</p>
 <p>Obsidian Proxy Server is not a standalone application but a middleware that can
 be used with <a href="http://expressjs.com/">Express</a>.</p>
 <h3 id="implementing-the-proxy-server">Implementing The Proxy Server</h3>
-<p>To implement this server in your application, you first have to install
+<p>To implement this server in your application, you first have to install the
 required dependencies:</p>
 <pre><code class="hljs sh">npm install --save obsidian-http-request express body-parser</code></pre>
 
@@ -189,10 +189,10 @@ If you change this route, you will have to configure it on the client side.</p>
 <p>Finally, to run the server you can simply run the previous script using Node:</p>
 <pre><code class="hljs sh">node server.js</code></pre>
 
-<p><strong>NOTE:</strong> for production environment you will probably want to use a <a href="http://expressjs.com/en/advanced/pm.html">process
+<p><strong>NOTE:</strong> for a production environment you will probably want to use a <a href="http://expressjs.com/en/advanced/pm.html">process
 manager</a> to run the server-side application.</p>
 <h3 id="proxy-status-code">Proxy Status Code</h3>
-<p>When the proxy operates, it can return various HTTP status code depending of
+<p>When the proxy operates, it can return various HTTP status code depending on
 the request and encountered errors:</p>
 <table>
 <thead>
@@ -212,7 +212,7 @@ the request and encountered errors:</p>
 </tr>
 <tr>
 <td>404</td>
-<td>Not Found: the proxy cannot access the resource on the remote server. This can be caused by several things: <ul><li>the URL is wrong or it cannot be accessed from the proxy server,</li><li>the remote server encountered an error (5XX),</li><li>the remote server requires to be authenticated to access the resource,</li><li>...</li></ul> Please note that the proxy server cannot follow redirection (3XX), so this will also ends with a 404 status code.</td>
+<td>Not Found: the proxy cannot access the resource on the remote server. This can be caused by several things: <ul><li>the URL is wrong or it cannot be accessed from the proxy server,</li><li>the remote server encountered an error (5XX),</li><li>the remote server requires to be authenticated to access the resource,</li><li>...</li></ul> Please note that the proxy server cannot follow redirection (3XX), so this will also end with a 404 status code.</td>
 </tr>
 <tr>
 <td>405</td>
@@ -242,7 +242,7 @@ httpRequest.proxyPath = <span class="hljs-string">"/custom/proxy-route"</span>;<
 
 <h2 id="simple-requests-http-get-">Simple Requests (HTTP GET)</h2>
 <p>When you just want to fetch assets, you can use simplified <code>get*Proxy</code> methods,
-depending of what kind of data you retrieve.</p>
+depending on what kind of data you retrieve.</p>
 <p>To make a request, just require the module and use the method that best fit
 your need.</p>
 <pre><code class="hljs javascript"><span class="hljs-keyword">const</span> httpRequest = <span class="hljs-built_in">require</span>(<span class="hljs-string">"obsidian-http-request"</span>);</code></pre>
@@ -251,7 +251,7 @@ your need.</p>
 behavior of the proxy:</p>
 <pre><code class="hljs javascript">httpRequest.get*<span class="hljs-built_in">Proxy</span>(url, {
     <span class="hljs-attr">headers</span>: {},      <span class="hljs-comment">// Additional custom HTTP headers</span>
-    allowedMimes: []  <span class="hljs-comment">// Avoid the proxy to download data types that</span>
+    allowedMimes: []  <span class="hljs-comment">// Prevent the proxy to download data types that</span>
                       <span class="hljs-comment">//   are not listed here</span>
 }).then(...);</code></pre>
 
@@ -290,9 +290,9 @@ a <a href="https://nodejs.org/api/buffer.html">Node.js <code>Buffer</code></a>.<
 
 <h2 id="advanced-requests">Advanced Requests</h2>
 <p>Obsidian HTTP Request provides a method to allow you to send more advanced
-requests (if you have to use an other method than <code>GET</code>, custom headers,
+requests (if you have to use a different method than <code>GET</code>, custom headers,
 body,...).</p>
-<p>Here is an example to send and receive JSON data:</p>
+<p>Here is an example of how to send and receive JSON data:</p>
 <pre><code class="hljs javascript">httpRequest.requestProxy(<span class="hljs-string">"http://www.example.com/do-something"</span>, {
     <span class="hljs-attr">method</span>: <span class="hljs-string">"POST"</span>,
     <span class="hljs-attr">headers</span>: {
