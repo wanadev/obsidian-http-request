@@ -38,7 +38,7 @@ If you are using [Browserify][] you have nothing to do, it will automatically
 add required libraries to your bundle.
 
 If you are not using Browserify, you have to use the [buffer
-library][bufferlib] library.
+library][bufferlib].
 
 
 [Browserify]: http://browserify.org/
