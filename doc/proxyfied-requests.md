@@ -6,15 +6,15 @@ autotoc: true
 
 # Proxyfied Requests
 
-Proxyfied Request are HTTP request that are send to a proxy server that will
+Proxyfied Request are HTTP requests that are sent to a proxy server that will
 forward them to the destination server. This can be useful when you want to
-retrieve assets from random sites and avoiding CORS.
+retrieve assets from random sites and avoid CORS.
 
 
 ## Proxy Server
 
-To use proxyfied request, your server must run a proxy that must be accessible
-on the **same orgine** (same domaine, port and protocol) that the application
+To use proxyfied requests, your server must run a proxy that must be accessible
+on the **same origin** (same domain, port and protocol) as the application
 page.
 
 Obsidian Proxy Server is not a standalone application but a middleware that can
@@ -22,7 +22,7 @@ be used with [Express][express].
 
 ### Implementing The Proxy Server
 
-To implement this server in your application, you first have to install
+To implement this server in your application, you first have to install the
 required dependencies:
 
 ```sh
@@ -62,19 +62,19 @@ Finally, to run the server you can simply run the previous script using Node:
 node server.js
 ```
 
-__NOTE:__ for production environment you will probably want to use a [process
+__NOTE:__ for a production environment you will probably want to use a [process
 manager][pm] to run the server-side application.
 
 ### Proxy Status Code
 
-When the proxy operates, it can return various HTTP status code depending of
+When the proxy operates, it can return various HTTP status code depending on
 the request and encountered errors:
 
 | Status | Meaning |
 |--------|---------|
 | 200    | Ok      |
 | 400    | Bad Request: this code is used in several cases: <ul><li>when you make a request with a wrong protocol (other than `http` and `https`),</li><li>when you try to make a request on a port that is not in the server's `allowedPorts` list,</li><li>when the request made to the proxy is invalid or incomplete (in this case, it is probably a version mismatch between the client-side and server-side library).</li></ul> |
-| 404    | Not Found: the proxy cannot access the resource on the remote server. This can be caused by several things: <ul><li>the URL is wrong or it cannot be accessed from the proxy server,</li><li>the remote server encountered an error (5XX),</li><li>the remote server requires to be authenticated to access the resource,</li><li>...</li></ul> Please note that the proxy server cannot follow redirection (3XX), so this will also ends with a 404 status code. |
+| 404    | Not Found: the proxy cannot access the resource on the remote server. This can be caused by several things: <ul><li>the URL is wrong or it cannot be accessed from the proxy server,</li><li>the remote server encountered an error (5XX),</li><li>the remote server requires to be authenticated to access the resource,</li><li>...</li></ul> Please note that the proxy server cannot follow redirection (3XX), so this will also end with a 404 status code. |
 | 405    | Method Not Allowed: you tried to make a request using a method that is not in the server's `allowedMethods` list. |
 | 406    | The mimetype of the requested resource is not in the `allowedMimes` list that was sent with the request (`httpRequest.get*Proxy(url, {allowedMimes: [...]})`). |
 | 413    | Too Large: the requested resource is larger than the server's `maxContentLength` configuration. |
@@ -96,7 +96,7 @@ httpRequest.proxyPath = "/custom/proxy-route";
 ## Simple Requests (HTTP GET)
 
 When you just want to fetch assets, you can use simplified `get*Proxy` methods,
-depending of what kind of data you retrieve.
+depending on what kind of data you retrieve.
 
 To make a request, just require the module and use the method that best fit
 your need.
@@ -111,7 +111,7 @@ behavior of the proxy:
 ```javascript
 httpRequest.get*Proxy(url, {
     headers: {},      // Additional custom HTTP headers
-    allowedMimes: []  // Avoid the proxy to download data types that
+    allowedMimes: []  // Prevent the proxy to download data types that
                       //   are not listed here
 }).then(...);
 ```
@@ -164,10 +164,10 @@ httpRequest.getRawProxy("http://www.example.com/hello.zip")
 ## Advanced Requests
 
 Obsidian HTTP Request provides a method to allow you to send more advanced
-requests (if you have to use an other method than `GET`, custom headers,
+requests (if you have to use a different method than `GET`, custom headers,
 body,...).
 
-Here is an example to send and receive JSON data:
+Here is an example of how to send and receive JSON data:
 
 
 ```javascript
