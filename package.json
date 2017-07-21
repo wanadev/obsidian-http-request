@@ -24,6 +24,7 @@
   "homepage": "https://github.com/wanadev/obsidian-http-request#readme",
   "devDependencies": {
     "body-parser": "^1.14.2",
+    "enlightme": "^0.1.1",
     "expect.js": "^0.3.1",
     "express": "^4.13.4",
     "grunt": "^1.0.1",
@@ -38,5 +39,9 @@
   "dependencies": {
     "lodash": "^4.2.0",
     "q": "^1.4.1"
+  },
+  "enlightme": {
+    "appName": "Obsidian HTTP Request"
   }
+
 }

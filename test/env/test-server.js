@@ -12,6 +12,15 @@ app.get("/echo-headers", function(req, res) {
     res.send(JSON.stringify(req.headers));
 });
 
+app.use("/echo-body", bodyParser.raw({type: "application/octet-stream"}));
+app.post("/echo-body", function(req, res) {
+    res.send(req.body);
+});
+
+app.put("/put-test", function(req, res) {
+    res.send("PUT");
+});
+
 app.get("/large-content", function(req, res) {
     var buffer = new Buffer(6 * 1024 * 1024);  // 6 MiB
     res.send(buffer);
@@ -19,7 +28,8 @@ app.get("/large-content", function(req, res) {
 
 app.use("/proxy", bodyParser.raw({type: "application/json"}));
 app.use("/proxy", proxyMiddleware({
-    allowedPorts: [80, 443, 3042]
+    allowedPorts: [80, 443, 3042],
+    allowedMethods: ["GET", "POST"]
 }));
 
 app.use("/mocha/", express.static(__dirname + "/../../node_modules/mocha/"));

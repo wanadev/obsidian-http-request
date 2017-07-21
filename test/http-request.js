@@ -145,6 +145,45 @@ describe("http-request", function() {
 
     });
 
+    describe("request", function() {
+
+        it("uses GET as default method", function() {
+            return httpRequest.request(SAMPLES_URL + "binary.bin")
+                .then(function(data) {
+                    expect(data.readUInt32BE(1)).to.equal(0xBADDCAFE);
+                });
+        });
+
+        it("can use POST method and send custom body", function() {
+            var body = Buffer.from("ABCDÉ\x00\xFF");
+            return httpRequest.request("/echo-body", {
+                method: "POST",
+                body: body,
+                headers: {
+                    "content-type": "application/octet-stream"
+                }
+            })
+                .then(function(data) {
+                    expect(data).to.eql(body);
+                    expect(data.toString("ascii", 0, 4)).to.equal("ABCD");
+                });
+        });
+
+        it("can set custom headers", function() {
+            return httpRequest.request("/echo-headers", {
+                method: "GET",
+                headers: {
+                    "x-foobar": "baz"
+                }
+            })
+                .then(function(rawResult) {
+                    var result = JSON.parse(rawResult.toString());
+                    expect(result["x-foobar"]).to.equal("baz");
+                });
+        });
+
+    });
+
     describe("getRawProxy", function() {
 
         it("can retrieve an ASCII text file", function() {
@@ -281,6 +320,31 @@ describe("http-request", function() {
 
     });
 
+    describe("requestProxy", function() {
+
+        it("uses GET as default method", function() {
+            return httpRequest.requestProxy(SAMPLES_URL + "binary.bin")
+                .then(function(data) {
+                    expect(data.readUInt32BE(1)).to.equal(0xBADDCAFE);
+                });
+        });
+
+        it("can use POST method and send custom body", function() {
+            var body = Buffer.from("ABCDÉ\x00\xFF");
+            return httpRequest.requestProxy("/echo-body", {
+                method: "POST",
+                body: body,
+                headers: {
+                    "content-type": "application/octet-stream"
+                }
+            })
+                .then(function(data) {
+                    expect(data).to.eql(body);
+                });
+        });
+
+    });
+
     describe("*Proxy", function() {
 
         it("can define custom headers for the proxy request", function() {
@@ -360,6 +424,29 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/HttpStatus400/);
+                });
+        });
+
+        it("can resolve relative URLs", function() {
+            return httpRequest.getJsonProxy("./echo-headers", {
+                    headers: {
+                        "x-test-header": "ok",
+                    }
+                })
+                .then(function(result) {
+                    expect(result["x-test-header"]).to.equal("ok");
+                });
+        });
+
+        it("cannot use forbiddenHTTP methods", function() {
+            return httpRequest.requestProxy("/put-test", {
+                method: "PUT"
+            })
+                .then(function(result) {
+                    throw new Error("ShouldNotBeCalled");
+                })
+                .catch(function(error) {
+                    expect(error).to.match(/HttpStatus405/);
                 });
         });
 

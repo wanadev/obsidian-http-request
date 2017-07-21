@@ -2,3 +2,4 @@ node_modules
 *.log
 npm-debug.log*
 *.generated.js
+doc.generated

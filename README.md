@@ -8,81 +8,33 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/wanadev/obsidian-http-request.svg)](https://greenkeeper.io/)
 
 
-## Quick Start: Server-side
+**Obsidian HTTP Request** is a helper library that allows you to download
+assets and make HTTP requests either directly or through a proxy (to avoid CORS
+issues, for example when using images from an other domain with a canvas).
+
+![Obsidian HTTP Request Schemas](./doc/images/obsidian-http-request-schema.png)
+
+
+## Documentation
+
+You can find the library documentation at the following address:
+
+* http://wanadev.github.io/obsidian-http-request/
+
+
+## Example
 
 ```javascript
-"use strict";
+const httpRequest = require("obsidian-http-request");
 
-var express = require("express");
-var bodyParser = require("body-parser");
-var proxyMiddleware = require("obsidian-http-request/server/http-proxy");
-
-var PORT = process.env.PORT || 3042;
-
-var app = express();
-
-app.use("/proxy", bodyParser.raw({type: "application/json"}));
-app.use("/proxy", proxyMiddleware({
-    maxContentLength: 5 * 1024 * 1024,  // Allows to transfer files of 5 MiB max
-    allowedPorts: [80, 443]             // Allows to download from ports 80 (http) and 443 (https)
-}));
-
-console.log("Starting Obsidian HTTP Request Proxy Test Server on 0.0.0.0:" + PORT);
-app.listen(PORT);
-```
-
-
-## Quick Start: Client-side
-
-### Without proxy
-
-```javascript
-"use strict";
-
-var httpRequest = require("obsidian-http-request");
-
-httpRequest.getRaw("http://www.example.com/hello.zip")
+httpRequest.getText("http://example.com/hello.txt")
     .then(function(result) {
-        console.log(result);  // -> Node.js Buffer
-    });
-
-httpRequest.getText("http://www.example.com/hello.txt")
-    .then(function(result) {
-        console.log(result);  // -> String
-    });
-
-httpRequest.getJson("http://www.example.com/hello.json")
-    .then(function(result) {
-        console.log(result);  // -> {}
+        console.log(result);
+    })
+    .catch(function(error) {
+        console.error(error);
     });
 ```
-
-### With proxy
-
-```javascript
-"use strict";
-
-var httpRequest = require("obsidian-http-request");
-
-httpRequest.proxyPath = "/proxy";
-
-httpRequest.getRawProxy("http://www.example.com/hello.zip", {headers: {}, allowedMimes: []})
-    .then(function(result) {
-        console.log(result);  // -> Node.js Buffer
-    });
-
-httpRequest.getTextProxy("http://www.example.com/hello.txt", {headers: {}, allowedMimes: []})
-    .then(function(result) {
-        console.log(result);  // -> String
-    });
-
-httpRequest.getJsonProxy("http://www.example.com/hello.json", {headers: {}, allowedMimes: []})
-    .then(function(result) {
-        console.log(result);  // -> {}
-    });
-```
-
-__NOTE:__ `headers` and `allowedMimes` are optional.
 
 
 ## Changelog
