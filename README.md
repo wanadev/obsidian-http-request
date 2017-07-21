@@ -39,4 +39,9 @@ httpRequest.getText("http://example.com/hello.txt")
 
 ## Changelog
 
+* **1.2.0:**
+    * Generic `request` and `requestProxy` method (to be able to use different
+      methods than GET, with more options) #6
+    * Proxyfied methods can now be used with relative links
+    * Better documentation
 * **1.1.4:** Updates dependencies
