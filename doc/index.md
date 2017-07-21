@@ -3,7 +3,7 @@ title: Home
 menuOrder: 0
 ---
 
-**Obsidian HTTP Request** is an helper library that allows you to download
+**Obsidian HTTP Request** is a helper library that allows you to download
 assets and make HTTP requests either directly or through a proxy (to avoid CORS
 issues, for example when using images from an other domain with a canvas).
 
