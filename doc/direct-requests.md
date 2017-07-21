@@ -8,7 +8,7 @@ autotoc: true
 
 Direct Request are simply AJAX request that are not proxyfied.
 
-To make a request, just require the module and use the method that best fit
+To make a request, just require the module and use the method that best fits
 your need.
 
 ```javascript
@@ -19,7 +19,7 @@ const httpRequest = require("obsidian-http-request");
 ## Simple Requests (HTTP GET)
 
 When you just want to fetch assets, you can use simplified `get*` methods,
-depending of what kind of data you retrieve.
+depending on what kind of data you retrieve.
 
 ### httpRequest.getText
 
@@ -69,10 +69,10 @@ httpRequest.getRaw("http://www.example.com/hello.zip")
 ## Advanced Requests
 
 Obsidian HTTP Request provides a method to allow you to send more advanced
-requests (if you have to use an other method than `GET`, custom headers,
+requests (if you have to use a different method than `GET`, custom headers,
 body,...).
 
-Here is an example to send and receive JSON data:
+Here is an example of how to send and receive JSON data:
 
 ```javascript
 httpRequest.request("http://www.example.com/do-something", {
