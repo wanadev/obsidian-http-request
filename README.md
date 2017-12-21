@@ -39,6 +39,7 @@ httpRequest.getText("http://example.com/hello.txt")
 
 ## Changelog
 
+* **1.3.0:** Log URLs in error messages
 * **1.2.0:**
     * Generic `request` and `requestProxy` method (to be able to use different
       methods than GET, with more options) #6
