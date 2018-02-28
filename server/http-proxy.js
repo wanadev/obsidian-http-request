@@ -102,7 +102,7 @@ module.exports = function(params) {
             })
             .then(function(response) {
                 var error;
-                if (response.statusCode != 200) {
+                if (response.statusCode < 200 || response.statusCode > 299) {
                     error = new Error("HttpStatus" + response.statusCode);
                     error.statusCode = 404;
                     throw error;

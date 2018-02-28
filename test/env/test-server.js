@@ -12,6 +12,10 @@ app.get("/echo-headers", function(req, res) {
     res.send(JSON.stringify(req.headers));
 });
 
+app.get("/status-201", function(req, res) {
+    res.sendStatus(201);
+});
+
 app.use("/echo-body", bodyParser.raw({type: "application/octet-stream"}));
 app.post("/echo-body", function(req, res) {
     res.send(req.body);

@@ -363,6 +363,10 @@ describe("http-request", function() {
                 });
         });
 
+        it("report success on 2xx HTTP status", function() {
+            return httpRequest.getRawProxy(ROOT_URL + "/status-201");
+        });
+
         it("can retrieve files through HTTPS", function() {
             return httpRequest.getRawProxy(HTTPS_IMAGE_URL)
                 .then(function(result) {
