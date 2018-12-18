@@ -39,6 +39,7 @@ httpRequest.getText("http://example.com/hello.txt")
 
 ## Changelog
 
+* **1.3.2:** Accepts 2xx HTTP status code and not only 200 (client side)
 * **1.3.1:** Proxy do not returns an error anymore when server respond with 2xx
   status code (#14)
 * **1.3.0:** Log URLs in error messages
