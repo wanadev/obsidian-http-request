@@ -48,15 +48,6 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/HttpStatus404/);
-                });
-        });
-
-        it("can report HTTP errors with status code and message", function() {
-            return httpRequest.getRaw(SAMPLES_URL + "404")
-                .then(function(result) {
-                    throw new Error("ShouldNotBeCalled");
-                })
-                .catch(function(error) {
                     expect(error.response).to.be.an(Object);
                     expect(error.statusCode).to.be(404);
                     expect(error.statusMessage).to.be.a("string");
@@ -109,15 +100,6 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/HttpStatus404/);
-                });
-        });
-
-        it("can report HTTP errors with status code and message", function() {
-            return httpRequest.getText(SAMPLES_URL + "404")
-                .then(function(result) {
-                    throw new Error("ShouldNotBeCalled");
-                })
-                .catch(function(error) {
                     expect(error.response).to.be.an(Object);
                     expect(error.statusCode).to.be(404);
                     expect(error.statusMessage).to.be.a("string");
@@ -144,15 +126,6 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/NotAValidJson/);
-                });
-        });
-
-        it("can report unvalid JSON (from a corrupted JSON) with status code and message", function() {
-            return httpRequest.getJson(SAMPLES_URL + "json-corrupted.json")
-                .then(function(result) {
-                    throw new Error("ShouldNotBeCalled");
-                })
-                .catch(function(error) {
                     expect(error.response).to.be.an(Object);
                     expect(error.statusCode).to.be(200);
                     expect(error.statusMessage).to.be.a("string");
@@ -167,15 +140,6 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/NotAValidJson/);
-                });
-        });
-
-        it("can report unvalid JSON (from a non-JSON file) with response and cause", function() {
-            return httpRequest.getJson(SAMPLES_URL + "text-ascii.txt")
-                .then(function(result) {
-                    throw new Error("ShouldNotBeCalled");
-                })
-                .catch(function(error) {
                     expect(error.response).to.be.an(Object);
                     expect(error.statusCode).to.be(200);
                     expect(error.statusMessage).to.be.a("string");
@@ -190,15 +154,6 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/HttpStatus404/);
-                });
-        });
-
-        it("can report HTTP errors with status code and message", function() {
-            return httpRequest.getJson(SAMPLES_URL + "404")
-                .then(function(result) {
-                    throw new Error("ShouldNotBeCalled");
-                })
-                .catch(function(error) {
                     expect(error.response).to.be.an(Object);
                     expect(error.statusCode).to.be(404);
                     expect(error.statusMessage).to.be.a("string");
@@ -285,15 +240,6 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/HttpStatus404/);
-                });
-        });
-
-        it("can report HTTP errors with status code and message", function() {
-            return httpRequest.getRawProxy(SAMPLES_URL + "404")
-                .then(function(result) {
-                    throw new Error("ShouldNotBeCalled");
-                })
-                .catch(function(error) {
                     expect(error.response).to.be.an(Object);
                     expect(error.statusCode).to.be(404);
                     expect(error.statusMessage).to.be.a("string");
@@ -346,15 +292,6 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/HttpStatus404/);
-                });
-        });
-
-        it("can report HTTP errors with status code and message", function() {
-            return httpRequest.getTextProxy(SAMPLES_URL + "404")
-                .then(function(result) {
-                    throw new Error("ShouldNotBeCalled");
-                })
-                .catch(function(error) {
                     expect(error.response).to.be.an(Object);
                     expect(error.statusCode).to.be(404);
                     expect(error.statusMessage).to.be.a("string");
@@ -381,15 +318,6 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/NotAValidJson/);
-                });
-        });
-
-        it("can report unvalid JSON (from a corrupted JSON) with status code and message", function() {
-            return httpRequest.getJsonProxy(SAMPLES_URL + "json-corrupted.json")
-                .then(function(result) {
-                    throw new Error("ShouldNotBeCalled");
-                })
-                .catch(function(error) {
                     expect(error.response).to.be.an(Object);
                     expect(error.statusCode).to.be(200);
                     expect(error.statusMessage).to.be.a("string");
@@ -404,15 +332,6 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/NotAValidJson/);
-                });
-        });
-
-        it("can report unvalid JSON (from a non-JSON file) with response and cause", function() {
-            return httpRequest.getJsonProxy(SAMPLES_URL + "text-ascii.txt")
-                .then(function(result) {
-                    throw new Error("ShouldNotBeCalled");
-                })
-                .catch(function(error) {
                     expect(error.response).to.be.an(Object);
                     expect(error.statusCode).to.be(200);
                     expect(error.statusMessage).to.be.a("string");
@@ -427,15 +346,6 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/HttpStatus404/);
-                });
-        });
-
-        it("can report HTTP errors with status code and message", function() {
-            return httpRequest.getJsonProxy(SAMPLES_URL + "404")
-                .then(function(result) {
-                    throw new Error("ShouldNotBeCalled");
-                })
-                .catch(function(error) {
                     expect(error.response).to.be.an(Object);
                     expect(error.statusCode).to.be(404);
                     expect(error.statusMessage).to.be.a("string");
