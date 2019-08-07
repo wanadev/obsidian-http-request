@@ -247,7 +247,7 @@ describe("http-request", function() {
                     throw new Error("ShouldNotBeCalled");
                 })
                 .catch(function(error) {
-                    expect(error).to.match(/HttpConnexionError/);
+                    expect(error).to.match(/HttpConnectionError/);
                 });
         });
 
