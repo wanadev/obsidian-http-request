@@ -48,6 +48,8 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/HttpStatus404/);
+                    expect(error.statusCode).to.be(404);
+                    expect(error.statusMessage).to.be.a("string");
                 });
         });
 
@@ -97,6 +99,8 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/HttpStatus404/);
+                    expect(error.statusCode).to.be(404);
+                    expect(error.statusMessage).to.be.a("string");
                 });
         });
 
@@ -120,6 +124,9 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/NotAValidJson/);
+                    expect(error.statusCode).to.be(200);
+                    expect(error.statusMessage).to.be.a("string");
+                    expect(error.cause).to.be.an(Error);
                 });
         });
 
@@ -130,6 +137,9 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/NotAValidJson/);
+                    expect(error.statusCode).to.be(200);
+                    expect(error.statusMessage).to.be.a("string");
+                    expect(error.cause).to.be.an(Error);
                 });
         });
 
@@ -140,6 +150,8 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/HttpStatus404/);
+                    expect(error.statusCode).to.be(404);
+                    expect(error.statusMessage).to.be.a("string");
                 });
         });
 
@@ -223,6 +235,8 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/HttpStatus404/);
+                    expect(error.statusCode).to.be(404);
+                    expect(error.statusMessage).to.be.a("string");
                 });
         });
 
@@ -272,6 +286,8 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/HttpStatus404/);
+                    expect(error.statusCode).to.be(404);
+                    expect(error.statusMessage).to.be.a("string");
                 });
         });
 
@@ -295,6 +311,9 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/NotAValidJson/);
+                    expect(error.statusCode).to.be(200);
+                    expect(error.statusMessage).to.be.a("string");
+                    expect(error.cause).to.be.an(Error);
                 });
         });
 
@@ -305,6 +324,9 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/NotAValidJson/);
+                    expect(error.statusCode).to.be(200);
+                    expect(error.statusMessage).to.be.a("string");
+                    expect(error.cause).to.be.an(Error);
                 });
         });
 
@@ -315,6 +337,8 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/HttpStatus404/);
+                    expect(error.statusCode).to.be(404);
+                    expect(error.statusMessage).to.be.a("string");
                 });
         });
 
@@ -398,6 +422,8 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/HttpStatus406/);
+                    expect(error.statusCode).to.be(406);
+                    expect(error.statusMessage).to.be.a("string");
                 });
         });
 
@@ -408,6 +434,8 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/HttpStatus413/);
+                    expect(error.statusCode).to.be(413);
+                    expect(error.statusMessage).to.be.a("string");
                 });
         });
 
@@ -418,6 +446,8 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/HttpStatus400/);
+                    expect(error.statusCode).to.be(400);
+                    expect(error.statusMessage).to.be.a("string");
                 });
         });
 
@@ -428,6 +458,8 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/HttpStatus400/);
+                    expect(error.statusCode).to.be(400);
+                    expect(error.statusMessage).to.be.a("string");
                 });
         });
 
@@ -451,6 +483,8 @@ describe("http-request", function() {
                 })
                 .catch(function(error) {
                     expect(error).to.match(/HttpStatus405/);
+                    expect(error.statusCode).to.be(405);
+                    expect(error.statusMessage).to.be.a("string");
                 });
         });
 

@@ -92,6 +92,25 @@ httpRequest.request("http://www.example.com/do-something", {
     });
 ```
 
+## Catching errors
 
+Thown errors provide access to status code and message
+
+```javascript
+httpRequest.getText("http://www.example.com/404.txt")
+    .catch(function(error) {
+        console.error(error.statusCode); // 404
+        console.error(error.statusMessage); // "Not Found"
+    });
+```
+Cause error can be accessed for errors while parsing json response
+
+```javascript
+httpRequest.getJson("http://www.example.com/invalid.json")
+    .catch(function(error) {
+        console.error(error); // Error "NotAValidJson"
+        console.error(error.cause); // Error "SyntaxError"
+    });
+```
 
 [buffer]: https://nodejs.org/api/buffer.html
