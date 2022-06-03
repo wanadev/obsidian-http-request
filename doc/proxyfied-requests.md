@@ -162,8 +162,7 @@ httpRequest.getRawProxy("http://www.example.com/hello.zip")
 
 ### httpRequest.getBlobProxy
 
-This method can be used to retrieve data as a Blob. It returns
-a native Javascript `Blob`.
+This method can be used to retrieve data as a Blob. It returns a `Blob`.
 
 ```javascript
 httpRequest.getBlobProxy("http://www.example.com/hello.png")

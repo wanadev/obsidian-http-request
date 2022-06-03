@@ -67,8 +67,7 @@ httpRequest.getRaw("http://www.example.com/hello.zip")
 
 ### httpRequest.getBlob
 
-This method can be used to retrieve data as a Blob. It returns
-a native Javascript `Blob`.
+This method can be used to retrieve data as a Blob. It returns a `Blob`.
 ```javascript
 httpRequest.getBlob("http://www.example.com/hello.png")
     .then(function(result) {
