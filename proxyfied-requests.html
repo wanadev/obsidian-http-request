@@ -118,6 +118,11 @@
                 
             </li>
         
+            <li>
+                <a href="#httprequest-getblobproxy">httpRequest.getBlobProxy</a>
+                
+            </li>
+        
     </ul>
 
                 
@@ -125,6 +130,11 @@
         
             <li>
                 <a href="#advanced-requests">Advanced Requests</a>
+                
+            </li>
+        
+            <li>
+                <a href="#catching-errors">Catching errors</a>
                 
             </li>
         
@@ -287,6 +297,15 @@ a <a href="https://nodejs.org/api/buffer.html">Node.js <code>Buffer</code></a>.<
         <span class="hljs-built_in">console</span>.error(error);
     });</code></pre>
 
+<h3 id="httprequest-getblobproxy">httpRequest.getBlobProxy</h3>
+<p>This method can be used to retrieve data as a Blob. It returns a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Blob"><code>Blob</code></a>.</p>
+<pre><code class="hljs javascript">httpRequest.getBlobProxy(<span class="hljs-string">"http://www.example.com/hello.png"</span>)
+    .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">result</span>) </span>{
+        <span class="hljs-built_in">console</span>.log(result);  <span class="hljs-comment">// -&gt; Blob</span>
+    })
+    .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error</span>) </span>{
+        <span class="hljs-built_in">console</span>.error(error);
+    });</code></pre>
 
 <h2 id="advanced-requests">Advanced Requests</h2>
 <p>Obsidian HTTP Request provides a method to allow you to send more advanced
@@ -310,13 +329,27 @@ body,...).</p>
         <span class="hljs-built_in">console</span>.error(error);
     });</code></pre>
 
+<h2 id="catching-errors">Catching errors</h2>
+<p>Thown errors provide access to status code and message</p>
+<pre><code class="hljs javascript">httpRequest.getTextProxy(<span class="hljs-string">"http://www.example.com/404.txt"</span>)
+    .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error</span>) </span>{
+        <span class="hljs-built_in">console</span>.error(error.statusCode); <span class="hljs-comment">// 404</span>
+        <span class="hljs-built_in">console</span>.error(error.statusMessage); <span class="hljs-comment">// "Not Found"</span>
+    });</code></pre>
+Cause error can be accessed for errors while parsing json response
+
+<pre><code class="hljs javascript">httpRequest.getJsonProxy(<span class="hljs-string">"http://www.example.com/invalid.json"</span>)
+    .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error</span>) </span>{
+        <span class="hljs-built_in">console</span>.error(error); <span class="hljs-comment">// Error "NotAValidJson"</span>
+        <span class="hljs-built_in">console</span>.error(error.cause); <span class="hljs-comment">// Error "SyntaxError"</span>
+    });</code></pre>
 
 
                 </article>
             </div>
 
             <footer>
-                Copyright (c)  2017 Wanadev
+                Copyright (c)  2022 Wanadev
 - <a href="http://www.wanadev.fr/">www.wanadev.fr</a><br />
 Unless otherwise specified, this documentation is published under the
 <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.en">cc by-sa 3.0</a> license<br />
