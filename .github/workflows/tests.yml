@@ -1,0 +1,53 @@
+name: "Tests"
+
+on:
+  push:
+    paths:
+      - "lib/**"
+      - "server/**"
+      - "test/**"
+      - ".github/workflows/tests.yml"
+  pull_request:
+    paths:
+      - "lib/**"
+      - "server/**"
+      - "test/**"
+      - ".github/workflows/tests.yml"
+
+jobs:
+
+  build:
+
+    name: "Run tests"
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: "Checkout the repository"
+        uses: actions/checkout@v2
+
+      - name: "Set up Node 16"
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: "Install Node dependencies"
+        run: |
+          npm install
+
+      - name: "Start the test server"
+        run: |
+          npx pm2 start -f test/env/test-server.js --name=obsidian-proxy-server &
+
+      - name: "Run lint"
+        run: |
+          npx grunt jshint
+
+      - name: "Run tests"
+        run: |
+          npx grunt browserify:test mocha_phantomjs
+
+      - name: "Stop the test server"
+        run: |
+          npx pm2 kill
+
