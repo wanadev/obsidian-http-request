@@ -157,6 +157,49 @@ describe("http-request", function() {
 
     });
 
+    describe("getBlob", function() {
+
+        it("can retrieve an ASCII text file", function() {
+            return httpRequest.getBlob(SAMPLES_URL + "text-ascii.txt")
+                .then(function(result) {
+                    expect(result).to.be.a(Blob);
+                    expect(result.size).to.be(91);
+                    expect(result.type).to.be("text/plain; charset=utf-8");
+                });
+        });
+
+        it("can retrieve a binary file", function() {
+            return httpRequest.getBlob(SAMPLES_URL + "binary.bin")
+                .then(function(result) {
+                    expect(result).to.be.a(Blob);
+                    expect(result.size).to.be(6);
+                    expect(result.type).to.be("application/octet-stream");
+                });
+        });
+
+        it("can retrieve large files", function() {
+            return httpRequest.getBlob(SAMPLES_URL + "large-file.png")
+                .then(function(result) {
+                    expect(result).to.be.a(Blob);
+                    expect(result.size).to.be(633203);
+                    expect(result.type).to.be("image/png");
+                });
+        });
+
+        it("can report HTTP errors", function() {
+            return httpRequest.getBlob(SAMPLES_URL + "404")
+                .then(function(result) {
+                    throw new Error("ShouldNotBeCalled");
+                })
+                .catch(function(error) {
+                    expect(error).to.match(/HttpStatus404/);
+                    expect(error.statusCode).to.be(404);
+                    expect(error.statusMessage).to.be.a("string");
+                });
+        });
+
+    });
+
     describe("request", function() {
 
         it("uses GET as default method", function() {
@@ -332,6 +375,49 @@ describe("http-request", function() {
 
         it("can report HTTP errors", function() {
             return httpRequest.getJsonProxy(SAMPLES_URL + "404")
+                .then(function(result) {
+                    throw new Error("ShouldNotBeCalled");
+                })
+                .catch(function(error) {
+                    expect(error).to.match(/HttpStatus404/);
+                    expect(error.statusCode).to.be(404);
+                    expect(error.statusMessage).to.be.a("string");
+                });
+        });
+
+    });
+
+    describe("getBlobProxy", function() {
+
+        it("can retrieve an ASCII text file", function() {
+            return httpRequest.getBlobProxy(SAMPLES_URL + "text-ascii.txt")
+                .then(function(result) {
+                    expect(result).to.be.a(Blob);
+                    expect(result.size).to.be(91);
+                    expect(result.type).to.be("text/plain; charset=utf-8");
+                });
+        });
+
+        it("can retrieve a binary file", function() {
+            return httpRequest.getBlobProxy(SAMPLES_URL + "binary.bin")
+                .then(function(result) {
+                    expect(result).to.be.a(Blob);
+                    expect(result.size).to.be(6);
+                    expect(result.type).to.be("application/octet-stream");
+                });
+        });
+
+        it("can retrieve large files", function() {
+            return httpRequest.getBlobProxy(SAMPLES_URL + "large-file.png")
+                .then(function(result) {
+                    expect(result).to.be.a(Blob);
+                    expect(result.size).to.be(633203);
+                    expect(result.type).to.be("image/png");
+                });
+        });
+
+        it("can report HTTP errors", function() {
+            return httpRequest.getBlobProxy(SAMPLES_URL + "404")
                 .then(function(result) {
                     throw new Error("ShouldNotBeCalled");
                 })
