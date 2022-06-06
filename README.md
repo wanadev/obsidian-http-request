@@ -37,6 +37,7 @@ httpRequest.getText("http://example.com/hello.txt")
 
 ## Changelog
 
+* **1.5.0:** Add a method to get the result as Blob (#20)
 * **1.4.0:** Adds status code and message in Error objects (#19)
 * **1.3.2:** Accepts 2xx HTTP status code and not only 200 (client side)
 * **1.3.1:** Proxy do not returns an error anymore when server respond with 2xx
