@@ -3,6 +3,7 @@
 [![Tests](https://github.com/wanadev/obsidian-http-request/actions/workflows/tests.yml/badge.svg)](https://github.com/wanadev/obsidian-http-request/actions/workflows/tests.yml)
 [![NPM Version](http://img.shields.io/npm/v/obsidian-http-request.svg?style=flat)](https://www.npmjs.com/package/obsidian-http-request)
 [![License](http://img.shields.io/npm/l/obsidian-http-request.svg?style=flat)](https://github.com/wanadev/obsidian-http-request/blob/master/LICENSE)
+[![Discord](https://img.shields.io/badge/chat-Discord-8c9eff?logo=discord&logoColor=ffffff)](https://discord.gg/BmUkEdMuFp)
 
 
 **Obsidian HTTP Request** is a helper library that allows you to download
