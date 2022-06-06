@@ -6,6 +6,7 @@ on:
       - master
     paths:
       - "doc/**"
+      - ".github/workflows/gh-pages.yml"
 
 jobs:
 
@@ -31,6 +32,7 @@ jobs:
       - name: "Build Doc"
         run: |
           npx enlightme
+          touch doc.generated/.nojekyll
 
       - name: "Deploy Github Pages"
         uses: JamesIves/github-pages-deploy-action@3.7.1
