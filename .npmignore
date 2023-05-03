@@ -2,6 +2,7 @@ test
 Gruntfile.js
 .jshintrc
 .tern-project
-.travis.yml
 doc
 doc.generated/
+.github
+RELEASE.rst
