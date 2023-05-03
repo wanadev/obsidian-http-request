@@ -13,6 +13,13 @@ issues, for example when using images from an other domain with a canvas).
 ![Obsidian HTTP Request Schemas](./doc/images/obsidian-http-request-schema.png)
 
 
+## Install
+
+To install Obsidian HTTP Request run the following command:
+
+    npm install obsidian-http-request
+
+
 ## Documentation
 
 You can find the library documentation at the following address:
@@ -35,17 +42,72 @@ httpRequest.getText("http://example.com/hello.txt")
 ```
 
 
+## Contributing
+
+### Questions
+
+If you have any question, you can:
+
+* [Open an issue on GitHub][gh-issue]
+* [Ask on discord][discord]
+
+### Bugs
+
+If you found a bug, please [open an issue on Github][gh-issue] with as much information as possible.
+
+### Pull Requests
+
+Please consider [filing a bug][gh-issue] before starting to work on a new feature. This will allow us to discuss the best way to do it. This is of course not necessary if you just want to fix some typo or small errors in the code.
+
+### Coding Style / Lint
+
+To check coding style, run the follwoing command:
+
+    npx grunt jshint
+
+### Tests
+
+Tu run tests, use the following command:
+
+    npx grunt test
+
+
+[gh-issue]: https://github.com/wanadev/obsidian-http-request/issues
+[discord]: https://discord.gg/BmUkEdMuFp
+
+
 ## Changelog
 
-* **1.5.0:** Add a method to get the result as Blob (#20)
-* **1.4.0:** Adds status code and message in Error objects (#19)
-* **1.3.2:** Accepts 2xx HTTP status code and not only 200 (client side)
-* **1.3.1:** Proxy do not returns an error anymore when server respond with 2xx
-  status code (#14)
-* **1.3.0:** Log URLs in error messages
-* **1.2.0:**
-    * Generic `request` and `requestProxy` method (to be able to use different
-      methods than GET, with more options) #6
+* **[NEXT]** (changes on master that have not been released yet):
+
+    * Nothing yet ;)
+
+* **v1.5.0:**
+
+    * Add a method to get the result as Blob (#20)
+
+* **v1.4.0:**
+
+    * Adds status code and message in Error objects (#19)
+
+* **v1.3.2:**
+
+    * Accepts 2xx HTTP status code and not only 200 (client side)
+
+* **v1.3.1:**
+
+    * Proxy do not returns an error anymore when server respond with 2xx stvatus code (#14)
+
+* **v1.3.0:**
+
+    * Log URLs in error messages
+
+* **v1.2.0:**
+
+    * Generic `request` and `requestProxy` method (to be able to use different methods than GET, with more options) #6
     * Proxyfied methods can now be used with relative links
     * Better documentation
-* **1.1.4:** Updates dependencies
+
+* **v1.1.4:**
+
+    * Updates dependencies
