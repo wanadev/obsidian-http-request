@@ -16,14 +16,14 @@ jobs:
     steps:
 
       - name: "Checkout"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           persist-credentials: false
 
-      - name: "Set up Node 16"
-        uses: actions/setup-node@v2
+      - name: "Set up Node 18"
+        uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
 
       - name: "Install Node dependencies"
         run: |
@@ -35,7 +35,7 @@ jobs:
           touch doc.generated/.nojekyll
 
       - name: "Deploy Github Pages"
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+        uses: JamesIves/github-pages-deploy-action@4.4.1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
