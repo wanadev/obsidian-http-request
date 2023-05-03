@@ -7,12 +7,14 @@ on:
       - "server/**"
       - "test/**"
       - ".github/workflows/tests.yml"
+      - "package.json"
   pull_request:
     paths:
       - "lib/**"
       - "server/**"
       - "test/**"
       - ".github/workflows/tests.yml"
+      - "package.json"
 
 jobs:
 
