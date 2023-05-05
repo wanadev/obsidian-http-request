@@ -80,7 +80,7 @@ Tu run tests, use the following command:
 
 * **[NEXT]** (changes on master that have not been released yet):
 
-    * Nothing yet ;)
+    * Replaced deprecated mocha-phantomjs by mocha-headless-chrome to run tests (@jbghoul, 27)
 
 * **v1.5.1:**
 
