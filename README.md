@@ -82,6 +82,10 @@ Tu run tests, use the following command:
 
     * Nothing yet ;)
 
+* **v1.5.1:**
+
+    * Updated dependencies (@jbghoul, #26)
+
 * **v1.5.0:**
 
     * Add a method to get the result as Blob (#20)
