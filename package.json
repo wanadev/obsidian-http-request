@@ -4,7 +4,8 @@
   "description": "Helper library to download assets (ajax) directly or through a proxy",
   "main": "lib/index.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "lint": "grunt lint"
   },
   "repository": {
     "type": "git",
@@ -28,12 +29,12 @@
     "expect.js": "^0.3.1",
     "express": "^4.18.2",
     "grunt": "^1.6.1",
-    "grunt-browserify": "^5.2.0",
+    "grunt-browserify": "^6.0.0",
     "grunt-contrib-jshint": "^3.2.0",
-    "grunt-mocha-phantomjs": "^4.0.0",
     "grunt-shell": "^4.0.0",
     "lodash": "^4.17.21",
-    "mocha": "^5.2.0",
+    "mocha": "^10.2.0",
+    "mocha-headless-chrome": "^4.0.0",
     "pm2": "^5.3.0"
   },
   "dependencies": {

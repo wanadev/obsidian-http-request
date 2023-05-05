@@ -28,7 +28,10 @@ module.exports = function(grunt) {
             },
             stopTestServer: {
                 command: "./node_modules/.bin/pm2 delete obsidian-http-request"
-            }
+            },
+            mocha_headless_chrome: {
+                command: "npx mocha-headless-chrome -f http://localhost:3042/"
+            },
         },
 
         jshint: {
@@ -39,24 +42,16 @@ module.exports = function(grunt) {
                 }
             }
         },
-
-        mocha_phantomjs: {
-            all: {
-                options: {
-                    urls: ["http://localhost:3042/"]
-                }
-            }
-        }
     });
 
     grunt.loadNpmTasks("grunt-browserify");
     grunt.loadNpmTasks("grunt-shell");
     grunt.loadNpmTasks("grunt-contrib-jshint");
-    grunt.loadNpmTasks("grunt-mocha-phantomjs");
 
     grunt.registerTask("default", ["test"]);
     grunt.registerTask("server-start", "Start the test server", ["shell:startTestServer"]);
     grunt.registerTask("server-stop", "Stop the test server", ["shell:stopTestServer"]);
-    grunt.registerTask("test", "Run all code quality checks and unit tests", ["jshint", "browserify:test", "shell:startTestServer", "mocha_phantomjs"]);
+    grunt.registerTask("lint", "Run code quality checks", ["jshint"]);
+    grunt.registerTask("test", "Run all unit tests", ["browserify:test", "shell:startTestServer", "shell:mocha_headless_chrome"]);
 
 };
