@@ -43,11 +43,11 @@ jobs:
 
       - name: "Run lint"
         run: |
-          npx grunt jshint
+          npm run lint
 
       - name: "Run tests"
         run: |
-          npx grunt browserify:test mocha_phantomjs
+          npm run test
 
       - name: "Stop the test server"
         run: |

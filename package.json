@@ -4,7 +4,8 @@
   "description": "Helper library to download assets (ajax) directly or through a proxy",
   "main": "lib/index.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "lint": "grunt lint"
   },
   "repository": {
     "type": "git",
