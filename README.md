@@ -80,38 +80,43 @@ Tu run tests, use the following command:
 
 * **[NEXT]** (changes on master that have not been released yet):
 
-    * Replaced deprecated mocha-phantomjs by mocha-headless-chrome to run tests (@jbghoul, 27)
+  * Nothing yet ;)
+
+* **v1.5.2:**
+
+  * Replaced deprecated mocha-phantomjs by mocha-headless-chrome to run tests (@jbghoul, 27)
+  * Fix: added missing lodash dependency (@jbghoul, #28)
 
 * **v1.5.1:**
 
-    * Updated dependencies (@jbghoul, #26)
+  * Updated dependencies (@jbghoul, #26)
 
 * **v1.5.0:**
 
-    * Add a method to get the result as Blob (#20)
+  * Add a method to get the result as Blob (#20)
 
 * **v1.4.0:**
 
-    * Adds status code and message in Error objects (#19)
+  * Adds status code and message in Error objects (#19)
 
 * **v1.3.2:**
 
-    * Accepts 2xx HTTP status code and not only 200 (client side)
+  * Accepts 2xx HTTP status code and not only 200 (client side)
 
 * **v1.3.1:**
 
-    * Proxy do not returns an error anymore when server respond with 2xx stvatus code (#14)
+  * Proxy do not returns an error anymore when server respond with 2xx stvatus code (#14)
 
 * **v1.3.0:**
 
-    * Log URLs in error messages
+  * Log URLs in error messages
 
 * **v1.2.0:**
 
-    * Generic `request` and `requestProxy` method (to be able to use different methods than GET, with more options) #6
-    * Proxyfied methods can now be used with relative links
-    * Better documentation
+  * Generic `request` and `requestProxy` method (to be able to use different methods than GET, with more options) #6
+  * Proxyfied methods can now be used with relative links
+  * Better documentation
 
 * **v1.1.4:**
 
-    * Updates dependencies
+  * Updates dependencies
