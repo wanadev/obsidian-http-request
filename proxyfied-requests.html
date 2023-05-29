@@ -98,28 +98,28 @@
             </li>
         
             <li>
-                <a href="#simple-requests-http-get-">Simple Requests (HTTP GET)</a>
+                <a href="#simple-requests-http-get">Simple Requests (HTTP GET)</a>
                 
                     
     <ul class="toc">
         
             <li>
-                <a href="#httprequest-gettextproxy">httpRequest.getTextProxy</a>
+                <a href="#httprequestgettextproxy">httpRequest.getTextProxy</a>
                 
             </li>
         
             <li>
-                <a href="#httprequest-getjsonproxy">httpRequest.getJsonProxy</a>
+                <a href="#httprequestgetjsonproxy">httpRequest.getJsonProxy</a>
                 
             </li>
         
             <li>
-                <a href="#httprequest-getrawproxy">httpRequest.getRawProxy</a>
+                <a href="#httprequestgetrawproxy">httpRequest.getRawProxy</a>
                 
             </li>
         
             <li>
-                <a href="#httprequest-getblobproxy">httpRequest.getBlobProxy</a>
+                <a href="#httprequestgetblobproxy">httpRequest.getBlobProxy</a>
                 
             </li>
         
@@ -211,8 +211,7 @@ the request and encountered errors:</p>
 <th>Meaning</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>200</td>
 <td>Ok</td>
 </tr>
@@ -240,8 +239,7 @@ the request and encountered errors:</p>
 <td>500</td>
 <td>An error occurred in the proxy server.</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <h2 id="client-side-configuration">Client-Side Configuration</h2>
 <p>By default the client library assumes that the proxy URL is <code>/proxy</code>. If you
 change this route in your server-side implementation, you will have to
@@ -250,7 +248,7 @@ configure it on the client side:</p>
 httpRequest.proxyPath = <span class="hljs-string">"/custom/proxy-route"</span>;</code></pre>
 
 
-<h2 id="simple-requests-http-get-">Simple Requests (HTTP GET)</h2>
+<h2 id="simple-requests-http-get">Simple Requests (HTTP GET)</h2>
 <p>When you just want to fetch assets, you can use simplified <code>get*Proxy</code> methods,
 depending on what kind of data you retrieve.</p>
 <p>To make a request, just require the module and use the method that best fit
@@ -265,7 +263,7 @@ behavior of the proxy:</p>
                       <span class="hljs-comment">//   are not listed here</span>
 }).then(...);</code></pre>
 
-<h3 id="httprequest-gettextproxy">httpRequest.getTextProxy</h3>
+<h3 id="httprequestgettextproxy">httpRequest.getTextProxy</h3>
 <p>This method can be used to retrieve text. It returns a <code>String</code>.</p>
 <pre><code class="hljs javascript">httpRequest.getTextProxy(<span class="hljs-string">"http://www.example.com/hello.txt"</span>)
     .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">result</span>) </span>{
@@ -275,7 +273,7 @@ behavior of the proxy:</p>
         <span class="hljs-built_in">console</span>.error(error);
     });</code></pre>
 
-<h3 id="httprequest-getjsonproxy">httpRequest.getJsonProxy</h3>
+<h3 id="httprequestgetjsonproxy">httpRequest.getJsonProxy</h3>
 <p>This method can be used to retrieve JSON. It returns native Javascript objects
 from the JSON.</p>
 <pre><code class="hljs javascript">httpRequest.getJsonProxy(<span class="hljs-string">"http://www.example.com/hello.json"</span>)
@@ -286,7 +284,7 @@ from the JSON.</p>
         <span class="hljs-built_in">console</span>.error(error);
     });</code></pre>
 
-<h3 id="httprequest-getrawproxy">httpRequest.getRawProxy</h3>
+<h3 id="httprequestgetrawproxy">httpRequest.getRawProxy</h3>
 <p>This method can be used to retrieve raw (possibly binary) data. It returns
 a <a href="https://nodejs.org/api/buffer.html">Node.js <code>Buffer</code></a>.</p>
 <pre><code class="hljs javascript">httpRequest.getRawProxy(<span class="hljs-string">"http://www.example.com/hello.zip"</span>)
@@ -297,7 +295,7 @@ a <a href="https://nodejs.org/api/buffer.html">Node.js <code>Buffer</code></a>.<
         <span class="hljs-built_in">console</span>.error(error);
     });</code></pre>
 
-<h3 id="httprequest-getblobproxy">httpRequest.getBlobProxy</h3>
+<h3 id="httprequestgetblobproxy">httpRequest.getBlobProxy</h3>
 <p>This method can be used to retrieve data as a Blob. It returns a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Blob"><code>Blob</code></a>.</p>
 <pre><code class="hljs javascript">httpRequest.getBlobProxy(<span class="hljs-string">"http://www.example.com/hello.png"</span>)
     .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">result</span>) </span>{
@@ -336,8 +334,7 @@ body,...).</p>
         <span class="hljs-built_in">console</span>.error(error.statusCode); <span class="hljs-comment">// 404</span>
         <span class="hljs-built_in">console</span>.error(error.statusMessage); <span class="hljs-comment">// "Not Found"</span>
     });</code></pre>
-Cause error can be accessed for errors while parsing json response
-
+<p>Cause error can be accessed for errors while parsing json response</p>
 <pre><code class="hljs javascript">httpRequest.getJsonProxy(<span class="hljs-string">"http://www.example.com/invalid.json"</span>)
     .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error</span>) </span>{
         <span class="hljs-built_in">console</span>.error(error); <span class="hljs-comment">// Error "NotAValidJson"</span>
@@ -353,7 +350,7 @@ Cause error can be accessed for errors while parsing json response
 - <a href="http://www.wanadev.fr/">www.wanadev.fr</a><br />
 Unless otherwise specified, this documentation is published under the
 <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.en">cc by-sa 3.0</a> license<br />
-Generated using <a href="https://wanadev.github.io/enlightme/\">Enlight'me</a> 0.1.1
+Generated using <a href="https://wanadev.github.io/enlightme/\">Enlight'me</a> 0.2.0
 
             </footer>
 
