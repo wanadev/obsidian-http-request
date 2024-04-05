@@ -8,6 +8,7 @@ on:
       - "test/**"
       - ".github/workflows/tests.yml"
       - "package.json"
+      - "package-lock.json"
   pull_request:
     paths:
       - "lib/**"
@@ -15,6 +16,7 @@ on:
       - "test/**"
       - ".github/workflows/tests.yml"
       - "package.json"
+      - "package-lock.json"
 
 jobs:
 
