@@ -35,7 +35,7 @@ jobs:
           touch doc.generated/.nojekyll
 
       - name: "Deploy Github Pages"
-        uses: JamesIves/github-pages-deploy-action@v4.6.8
+        uses: JamesIves/github-pages-deploy-action@v4.6.9
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
