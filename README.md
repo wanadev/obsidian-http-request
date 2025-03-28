@@ -82,6 +82,11 @@ Tu run tests, use the following command:
 
   * Nothing yet ;)
 
+* **v1.6.0:**
+
+  * feat: Replaced the deprecated Q library by native Promises (@jbghoul, #66, #65)
+  * misc(ci): Fixed test run on GitHub Actions (@jbghoul, #66)
+
 * **v1.5.2:**
 
   * Replaced deprecated mocha-phantomjs by mocha-headless-chrome to run tests (@jbghoul, 27)
