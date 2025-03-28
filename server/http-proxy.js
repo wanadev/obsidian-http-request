@@ -5,8 +5,6 @@ var http = require("http");
 var https = require("https");
 var lodash = require("lodash");
 
-var Q = require("q");
-
 var DEFAULT_OPTIONS = {
     maxContentLength: 5 * 1024 * 1024,  // 5 MiB
     allowedPorts: [80, 443],
@@ -88,7 +86,7 @@ module.exports = function(params) {
             headers: httpHeaders
         };
 
-        Q.Promise(function(resolve, reject) {
+        new Promise(function(resolve, reject) {
                 var httpModule = (httpOptions.protocol == "https:") ? https : http;
                 var request = httpModule.request(httpOptions, resolve)
                     .on("error", reject);

@@ -30,7 +30,7 @@ module.exports = function(grunt) {
                 command: "./node_modules/.bin/pm2 delete obsidian-http-request"
             },
             mocha_headless_chrome: {
-                command: "npx mocha-headless-chrome -f http://localhost:3042/"
+                command: "npx mocha-headless-chrome -f http://localhost:3042/ -a no-sandbox"
             },
         },
 

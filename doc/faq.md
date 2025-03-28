@@ -29,7 +29,6 @@ httpRequest.getRawProxy("http://example.org/hello.jpg")
 
         img.src = imageBlobUrl;
     })
-    .done();
 ```
 
 ## How To Use a Node Buffer in a Browser?

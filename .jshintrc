@@ -11,5 +11,7 @@
   "browserify": true,
   "mocha": true,
   "curly": true,
-  "globals": {}
+  "globals": {
+    "Promise": false
+  }
 }
