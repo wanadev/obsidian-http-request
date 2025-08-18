@@ -28,7 +28,7 @@ jobs:
     steps:
 
       - name: "Checkout the repository"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: "Set up Node 18"
         uses: actions/setup-node@v4
