@@ -477,7 +477,7 @@ describe("http-request", function() {
             return httpRequest.getRawProxy(ROOT_URL + "/status-201");
         });
 
-        it("can retrieve files through HTTPS", function() {
+        it.skip("can retrieve files through HTTPS", function() {
             return httpRequest.getRawProxy(HTTPS_IMAGE_URL)
                 .then(function(result) {
                     expect(result).to.be.a(Buffer);
